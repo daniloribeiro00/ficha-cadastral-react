@@ -40,10 +40,25 @@ const defaultData = {
         numeroDeFuncionarios: '',
     },
     dadosRepresentanteLegal: {
-
+        nomeCompleto: '',
+        cpf: '',
+        email: '',
+        dataNascimento: '',
+        telefone: '',
     },
     dadosAdministrador: {
-
+        administrador: {
+            nomeCompleto: '',
+            email: '',
+            senha: '',
+            telefone: '',
+        },
+        tecnico: {
+            nomeCompleto: '',
+            email: '',
+            senha: '',
+            telefone: '',
+        }
     },
     dadosNFeBoleto: {
 

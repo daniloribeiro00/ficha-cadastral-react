@@ -2,11 +2,67 @@ import styled from 'styled-components';
 
 export const Form = styled.form`
     border: 1px solid #ddd;
+    border-radius: 0.4rem;
+
+    h1 {
+        padding: 2rem;
+        font-size: 1.7rem;
+        text-align: center;
+
+        div {
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -20px;
+            margin-right: -20px;
+
+            img {
+                height: 18px;
+                cursor: help;
+            }
+        }
+        
+    }
+
+    .title2 {
+        border-top: 1px solid #ddd;
+    }
 
     div {
         display: flex;
         align-items: center;
         margin: 1.5rem 0;
+    }
+
+    .boxes {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+
+        .input {
+            input[type=checkbox] {
+                margin-left: 1rem;
+                height: 25px;
+            }
+
+            input[type=text] {
+                margin-top: 0.8rem;
+            }
+
+            label {
+                width: 100px;
+            }
+        }
+    }
+
+    .adminData {
+        width: 415px;
+        text-align: center;
+        
+        input {
+            margin-bottom: 16px;
+        }
     }
 
     .label {
@@ -24,12 +80,21 @@ export const Form = styled.form`
     }
 
     .vertical {
-        margin-bottom: 35px;
+        margin-bottom: 70px;
     }   
     
     .vertical2 {
-        margin-bottom: 72px;
+        margin-bottom: 25px;
     }   
+
+    .vertical3 {
+        margin-bottom: 152px;
+    }
+
+    .vertical4 {
+        margin-bottom: 73px;
+    }
+
 
     .input {
         display: flex;
@@ -54,7 +119,7 @@ export const Form = styled.form`
             font-weight: 300;
         }
 
-        select:disabled {
+        input:disabled, select:disabled {
             background-color: #ddd;
         }
 
@@ -63,9 +128,9 @@ export const Form = styled.form`
         }
     }
 
-    .submit {
+    .buttons {
         max-width: 800px;
-        margin: 3rem auto;
+        margin: 0 auto 3rem auto;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -83,6 +148,11 @@ export const Form = styled.form`
 
         button:hover {
             filter: brightness(80%);
+        }
+
+        button:first-child {
+            border: 1px solid blue;
+            background-color: #3873b4;
         }
     }
 

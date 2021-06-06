@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Form = styled.form`
     border: 1px solid #ddd;
+    border-radius: 0.4rem;
 
     h1 {
         padding: 2rem;
-        font-size: 1.5rem;
+        font-size: 1.65rem;
         text-align: center;
     }
 
@@ -102,7 +103,7 @@ export const Form = styled.form`
 
     .buttons {
         max-width: 800px;
-        margin: 3rem auto;
+        margin: 0 auto 3rem auto;
         display: flex;
         align-items: center;
         justify-content: flex-end;

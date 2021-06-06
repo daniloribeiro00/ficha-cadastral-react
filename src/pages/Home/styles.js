@@ -7,7 +7,7 @@ export const Container = styled.div`
 
     h1 {
         font-size: 2rem;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Roboto, sans-serif;
         font-weight: 300;
         color: #212121;
         border-bottom: 1px solid #ddd;
