@@ -29,7 +29,15 @@ const defaultData = {
         }
     },
     informacoesAdicionais: {
-
+        linguagensDeProgramacao: [],
+        outrasLinguagens: [],
+        ramoDeAtividade: [],
+        estadosQuePossuiClientes: [],
+        formaComercializacaoErp: [],
+        outrasFormas: [],
+        principaisClientes: '',
+        quantidadeDeClientes: '',
+        numeroDeFuncionarios: '',
     },
     dadosRepresentanteLegal: {
 

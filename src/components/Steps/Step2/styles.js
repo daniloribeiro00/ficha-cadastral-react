@@ -91,7 +91,7 @@ export const Form = styled.form`
             font-weight: 300;
         }
 
-        select:disabled {
+        input:disabled, select:disabled {
             background-color: #ddd;
         }
 

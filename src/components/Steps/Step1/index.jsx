@@ -5,13 +5,9 @@ import { Form } from './styles';
 import checkCep from 'cep-promise';
 
 export const Step1 = ({ formData, setForm, navigation }) => {
-	console.log(formData);
-
 	const [disabledSelect, setDisableSelect] = useState(true);
 	const [disabledInput, setDisableInput] = useState(false);
-	const [uf, setUf] = useState('AC');
 	const [listUf, setListUf] = useState([]);
-	const [city, setCity] = useState('');
 	const [listCity, setListCity] = useState([]);
 	const [cep, setCep] = useState({
 		cep: '',
@@ -79,11 +75,6 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [cep]);
 
-	// useEffect(() => {
-	// 	setUf(cep.state);
-	// 	setCity(cep.city);
-	// }, [cep]);
-
 	const handleInscricaoEstadual = () => {
 		setDisableInput(!disabledInput);
 		if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
@@ -92,6 +83,8 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 			formData.dadosDaOrganizacao.inscricaoEstadual = 'Isento';
 		}
 	};
+
+	console.log(formData);
 
 	return (
 		<Form>
@@ -339,8 +332,6 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					<select
 						className='size3'
 						name='dadosDaOrganizacao.address.cidade'
-						// value={city}
-						// onChange={(e) => setCity(e.target.value)}
 						disabled={disabledSelect}
 						value={formData.dadosDaOrganizacao.address.cidade}
 						onChange={setForm}
