@@ -21,7 +21,35 @@ export const Form = styled.form`
                 cursor: help;
             }
         }
+    }
+
+    h2 {
+        font-size: 1.7rem;
+        font-family: Roboto, sans-serif;
+        font-weight: 300;
+        color: #212121;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .data {
+        display: flex;
+        vertical-align: top;
+        align-items: flex-start;
+    }
+
+    .info {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        vertical-align: super;
         
+
+        div {
+            margin-bottom: 0;
+        }
     }
 
     .title2 {
@@ -74,7 +102,7 @@ export const Form = styled.form`
     }
 
     .label {
-        width: 350px;
+        width: 200px;
 
         font-size: 0.9rem;
         font-family: Arial, Helvetica, sans-serif;
@@ -103,9 +131,17 @@ export const Form = styled.form`
         margin-bottom: 73px;
     }
 
-
-    .input {
+    .wrap {
         display: flex;
+        align-items: flex-start;
+    }
+
+    .value {
+        width: 260px;
+        max-width: 280px;
+        word-wrap: break-word;
+        display: flex;
+        flex-wrap: wrap;
         align-items: center;
 
         font-size: 0.9rem;

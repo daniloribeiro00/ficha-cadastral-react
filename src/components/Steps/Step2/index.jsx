@@ -202,7 +202,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 			(e) => e.value === 'Nenhuma'
 		);
 		if (value === 'Nenhuma') {
-			formData.informacoesAdicionais.linguagensDeProgramacao = [];
+			formData.informacoesAdicionais.linguagensDeProgramacao = ['Nenhuma'];
 			langs.forEach((e, i) => {
 				langs[i].isChecked = false;
 			});
@@ -344,7 +344,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 			(e) => e.value === 'Nenhuma'
 		);
 		if (value === 'Nenhuma') {
-			formData.informacoesAdicionais.formaComercializacaoErp = [];
+			formData.informacoesAdicionais.formaComercializacaoErp = ['Nenhuma'];
 			formas.forEach((e, i) => {
 				formas[i].isChecked = false;
 			});

@@ -1,15 +1,86 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Form } from './styles';
 
 export const Step4 = ({ formData, setForm, navigation }) => {
-
-    console.log(formData.dadosAdministrador);
+	const [disabledInput, setDisabledInput] = useState(false);
 
     const handleAdminData = () => {
-        formData.dadosAdministrador.tecnico.nomeCompleto = formData.dadosAdministrador.administrador.nomeCompleto;
-        // document.querySelectorAll('.tecnico').value = 'nada';
+        formData.dadosAdministrador.tecnico = formData.dadosAdministrador.administrador;
+		setDisabledInput(!disabledInput);
     }
+
+	useEffect(() => {
+		if (disabledInput === true) {
+			formData.dadosAdministrador.tecnico = formData.dadosAdministrador.administrador;
+			document.getElementById('confirmaSenhaTecnico').value = formData.dadosAdministrador.administrador.senha;
+		} else {
+			formData.dadosAdministrador.tecnico = {
+				nomeCompleto: '',
+				email: '',
+				senha: '',
+				telefone: '',
+			}
+			document.getElementById('nomeTecnico').value = '';
+			document.getElementById('emailTecnico').value = '';
+			document.getElementById('senhaTecnico').value = '';
+			document.getElementById('confirmaSenhaTecnico').value = '';
+			document.getElementById('telefoneTecnico').value = '';
+		}	
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [disabledInput])
+
+	useEffect(() => {
+		if (disabledInput === true) {
+			formData.dadosAdministrador.tecnico = formData.dadosAdministrador.administrador;
+			// document.getElementById('confirmaSenhaTecnico').value = formData.dadosAdministrador.administrador.senha;
+		}	
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formData.dadosAdministrador.administrador])
+
+	const handleCheckPasswordAdministrador1 = (e) => {
+		const { value } = e.target;
+
+		console.log(value);
+		if (document.getElementById('confirmaSenhaAdministrador').value === value) {
+			console.log('valido');
+		} else {
+			console.log('invalido');
+		}
+	}
+
+	const handleCheckPasswordAdministrador2 = (e) => {
+		const { value } = e.target;
+
+		console.log(value);
+		if (formData.dadosAdministrador.administrador.senha === value) {
+			console.log('valido');
+		} else {
+			console.log('invalido');
+		}
+	}
+
+	const handleCheckPasswordTecnico1 = (e) => {
+		const { value } = e.target;
+
+		console.log(value);
+		if (document.getElementById('confirmaSenhaTecnico').value === value) {
+			console.log('valido');
+		} else {
+			console.log('invalido');
+		}
+	}
+
+	const handleCheckPasswordTecnico2 = (e) => {
+		const { value } = e.target;
+
+		console.log(value);
+		if (formData.dadosAdministrador.tecnico.senha === value) {
+			console.log('valido');
+		} else {
+			console.log('invalido');
+		}
+	}
 
     return (
         <Form>
@@ -54,10 +125,11 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<input
 						className='size3'
-						type='text'
+						type='password'
 						name='dadosAdministrador.administrador.senha'
 						value={formData.dadosAdministrador.administrador.senha}
 						onChange={setForm}
+						onBlur={handleCheckPasswordAdministrador1}
 					/>
 				</span>
 			</div>
@@ -68,7 +140,9 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<input
 						className='size3'
-						type='text'
+						id='confirmaSenhaAdministrador'
+						type='password'
+						onBlur={handleCheckPasswordAdministrador2}
 						// name='dadosAdministrador.email'
 						// value={formData.dadosAdministrador.email}
 						// onChange={setForm}
@@ -113,11 +187,13 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size1 tecnico'
+						className='size1'
+						id='nomeTecnico'
 						type='text'
 						name='dadosAdministrador.tecnico.nomeCompleto'
 						value={formData.dadosAdministrador.tecnico.nomeCompleto}
 						onChange={setForm}
+						disabled={disabledInput}
 					/>
 				</span>
 			</div>
@@ -127,11 +203,13 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size3 tecnico'
+						className='size3'
+						id='emailTecnico'
 						type='text'
 						name='dadosAdministrador.tecnico.email'
 						value={formData.dadosAdministrador.tecnico.email}
 						onChange={setForm}
+						disabled={disabledInput}
 					/>
 				</span>
 			</div>
@@ -141,11 +219,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size3 tecnico'
-						type='text'
+						className='size3'
+						id='senhaTecnico'
+						type='password'
 						name='dadosAdministrador.tecnico.senha'
 						value={formData.dadosAdministrador.tecnico.senha}
 						onChange={setForm}
+						disabled={disabledInput}
+						onBlur={handleCheckPasswordTecnico1}
 					/>
 				</span>
 			</div>
@@ -155,11 +236,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size3 tecnico'
-						type='text'
+						className='size3'
+						id='confirmaSenhaTecnico'
+						type='password'
+						onBlur={handleCheckPasswordTecnico2}
 						// name='dadosAdministrador.email'
 						// value={formData.dadosAdministrador.email}
 						// onChange={setForm}
+						disabled={disabledInput}
 					/>
 				</span>
 			</div>
@@ -169,12 +253,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size2 tecnico'
+						className='size2'
+						id='telefoneTecnico'
 						type='text'
 						name='dadosAdministrador.tecnico.telefone'
 						value={formData.dadosAdministrador.tecnico.telefone}
 						onChange={setForm}
                         placeholder='(00) 0000-0000'
+						disabled={disabledInput}
 					/>
 				</span>
 			</div>
