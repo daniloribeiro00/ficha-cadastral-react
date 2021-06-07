@@ -62,45 +62,6 @@ export const Form = styled.form`
         margin: 1.5rem 0;
     }
 
-    .boxes {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin: 0;
-
-        .input {
-            input[type=checkbox] {
-                margin-left: 1rem;
-                height: 25px;
-            }
-
-            input[type=text] {
-                margin-top: 0.8rem;
-            }
-
-            label {
-                width: 100px;
-            }
-        }
-    }
-
-    .radioButtons {
-        .input {
-            height: 27px;
-        }
-    }
-
-    .adminData {
-        width: 415px;
-        text-align: center;
-        margin-left: 12px;
-        margin-top: -18px;
-        
-        input {
-            margin-bottom: 16px;
-        }
-    }
-
     .label {
         width: 200px;
 
@@ -113,22 +74,6 @@ export const Form = styled.form`
             text-align: right;
             margin-right: 2rem;
         }
-    }
-
-    .vertical {
-        margin-bottom: 110px;
-    }   
-    
-    .vertical2 {
-        margin-bottom: 25px;
-    }   
-
-    .vertical3 {
-        margin-bottom: 152px;
-    }
-
-    .vertical4 {
-        margin-bottom: 73px;
     }
 
     .wrap {
@@ -151,24 +96,6 @@ export const Form = styled.form`
 
         label {
             margin-left: 0.5rem;;
-        }
-
-        input, select {
-            height: 35px;
-            border: 1px solid #ddd;
-            padding: 0 0.5rem;
-            transition: 0.2rem;
-            font-size: 0.9rem;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 300;
-        }
-
-        input:disabled, select:disabled {
-            background-color: #ddd;
-        }
-
-        input:focus, select:focus {
-            border: 1px solid #3873b4;
         }
     }
 
@@ -198,21 +125,5 @@ export const Form = styled.form`
             border: 1px solid blue;
             background-color: #3873b4;
         }
-    }
-
-    .size1 {
-        width: 450px;
-    }
-
-    .size2 {
-        width: 180px;
-    }
-
-    .size3 {
-        width: 280px;
-    }
-
-    .size4 {
-        width: 100px;
     }
 `;

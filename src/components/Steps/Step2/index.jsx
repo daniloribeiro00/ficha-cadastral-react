@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 import { Form } from './styles';
 
 export const Step2 = ({ formData, setForm, navigation }) => {
@@ -399,8 +400,6 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		let splitClientes = value.split(',');
         formData.informacoesAdicionais.principaisClientes = splitClientes;
     }
-
-    console.log(formData);
 
 	return (
 		<Form>

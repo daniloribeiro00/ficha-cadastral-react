@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
     width: 100%;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    background-color: #f9fbfc;
+    border-bottom: 1px solid #eee;
     padding: 1rem;
 `;
 
 export const Content = styled.div`
     margin: 0 auto;
-    max-width: 1100px;
+    max-width: 1120px;
 
     display: flex;
     align-items: center;
@@ -46,19 +46,19 @@ export const Content = styled.div`
             img {
                 height: 13px;
                 opacity: 50%;
-                margin-right: 1rem;
+                margin-right: 0.8rem;
             }
 
             p {
                 text-decoration: none;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Open Sans', sans-serif;
                 font-size: 0.8rem;
                 color: orangered;
             }
 
             a {
                 text-decoration: none;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Open Sans', sans-serif;
                 font-size: 0.8rem;
                 color: #3873b4;
                 

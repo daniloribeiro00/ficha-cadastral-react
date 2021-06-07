@@ -1,11 +1,9 @@
 import React from 'react';
+import InputMask from 'react-input-mask';
 
 import { Form } from './styles';
 
 export const Step3 = ({ formData, setForm, navigation }) => {
-
-    console.log(formData.dadosRepresentanteLegal);
-
     return (
         <Form>
             <div>
@@ -27,7 +25,8 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 					<p>CPF *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='999.999.999-99'
 						className='size2'
 						type='text'
 						name='dadosRepresentanteLegal.cpf'
@@ -42,7 +41,6 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						className='size3'
 						type='text'
 						name='dadosRepresentanteLegal.email'
 						value={formData.dadosRepresentanteLegal.email}
@@ -69,7 +67,8 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 					<p>Telefone *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='(99) 99999-9999'
 						className='size2'
 						type='text'
 						name='dadosRepresentanteLegal.telefone'

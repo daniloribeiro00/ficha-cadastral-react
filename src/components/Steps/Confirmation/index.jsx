@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { format, parseISO } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR'
+import ptBR from 'date-fns/locale/pt-BR';
 
 import { Form } from './styles';
+import { GlobalContext } from '../../../contexts/AppContext';
 
-export const Step6 = ({ formData, setForm, navigation }) => {
+export const Confirmation = ({ formData, navigation }) => {
+	const { companies, setCompanies } = useContext(GlobalContext);
+
+	function handleAddCompany() {
+		setCompanies([...companies, formData]);
+		navigation.next()
+	}
+
 	return (
 		<Form>
 			<h1>Confirme seus dados.</h1>
@@ -178,15 +186,19 @@ export const Step6 = ({ formData, setForm, navigation }) => {
 							<p>Onde possui clientes</p>
 						</span>
 						<span className='value'>
-							{formData.informacoesAdicionais.estadosQuePossuiClientes.map((e, i) => {
-								if (
-									i !==
-									formData.informacoesAdicionais.estadosQuePossuiClientes.length - 1
-								) {
-									e = e.padEnd(e.length + 1, ', ');
+							{formData.informacoesAdicionais.estadosQuePossuiClientes.map(
+								(e, i) => {
+									if (
+										i !==
+										formData.informacoesAdicionais.estadosQuePossuiClientes
+											.length -
+											1
+									) {
+										e = e.padEnd(e.length + 1, ', ');
+									}
+									return <p key={i}>{e}&nbsp;</p>;
 								}
-								return <p key={i}>{e}&nbsp;</p>;
-							})}
+							)}
 						</span>
 					</div>
 					<div className='wrap'>
@@ -194,15 +206,19 @@ export const Step6 = ({ formData, setForm, navigation }) => {
 							<p>Formas de comercial...</p>
 						</span>
 						<span className='value'>
-						{formData.informacoesAdicionais.formaComercializacaoErp.map((e, i) => {
-								if (
-									i !==
-									formData.informacoesAdicionais.formaComercializacaoErp.length - 1
-								) {
-									e = e.padEnd(e.length + 1, ', ');
+							{formData.informacoesAdicionais.formaComercializacaoErp.map(
+								(e, i) => {
+									if (
+										i !==
+										formData.informacoesAdicionais.formaComercializacaoErp
+											.length -
+											1
+									) {
+										e = e.padEnd(e.length + 1, ', ');
+									}
+									return <p key={i}>{e}&nbsp;</p>;
 								}
-								return <p key={i}>{e}&nbsp;</p>;
-							})}
+							)}
 						</span>
 					</div>
 					{formData.informacoesAdicionais.outrasFormas.length > 0 && (
@@ -281,8 +297,14 @@ export const Step6 = ({ formData, setForm, navigation }) => {
 							<p>Data de nascimento</p>
 						</span>
 						<span className='value'>
-							<p>{format(parseISO(formData.dadosRepresentanteLegal.dataNascimento), 'd/MM/yyyy', { locale: ptBR })
-							}</p>
+							<p>
+								{formData.dadosRepresentanteLegal.dataNascimento &&
+									format(
+										parseISO(formData.dadosRepresentanteLegal.dataNascimento),
+										'd/MM/yyyy',
+										{ locale: ptBR }
+									)}
+							</p>
 						</span>
 					</div>
 					<div>
@@ -309,7 +331,9 @@ export const Step6 = ({ formData, setForm, navigation }) => {
 							<p>Nome completo</p>
 						</span>
 						<span className='value'>
-							<p>{formData.dadosNFeBoleto.responsavelFinanceiro.nomeCompleto}</p>
+							<p>
+								{formData.dadosNFeBoleto.responsavelFinanceiro.nomeCompleto}
+							</p>
 						</span>
 					</div>
 					<div>
@@ -388,7 +412,7 @@ export const Step6 = ({ formData, setForm, navigation }) => {
 			</div>
 			<div className='buttons'>
 				<button onClick={() => navigation.previous()}>Voltar</button>
-				<button onClick={() => navigation.next()}>Enviar</button>
+				<button onClick={handleAddCompany}>Enviar</button>
 			</div>
 		</Form>
 	);

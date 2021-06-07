@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
+import InputMask from 'react-input-mask';
 
 import { Form } from './styles';
 
 import checkCep from 'cep-promise';
+import { GlobalContext } from '../../../contexts/AppContext';
 
 export const Step1 = ({ formData, setForm, navigation }) => {
-	const [disabledSelect, setDisableSelect] = useState(true);
-	const [disabledInput, setDisableInput] = useState(false);
-	const [listUf, setListUf] = useState([]);
-	const [listCity, setListCity] = useState([]);
-	const [cep, setCep] = useState({
-		cep: '',
-		state: '',
-		city: '',
-		street: '',
-		neighborhood: '',
-	});
+
+	console.log(formData.dadosDaOrganizacao);
+
+	const {
+		disabledSelectCidade,
+		setDisabledSelectCidade,
+		disabledInputInscricaoEstadual,
+		setDisabledInputInscricaoEstadual,
+		listUf,
+		setListUf,
+		listCity,
+		setListCity,
+		cep,
+		setCep,
+	} = useContext(GlobalContext);
 
 	useEffect(() => {
 		loadUf();
@@ -24,9 +31,9 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 	useEffect(() => {
 		if (formData.dadosDaOrganizacao.address.estado) {
 			loadCity(formData.dadosDaOrganizacao.address.estado);
-			setDisableSelect(false);
+			setDisabledSelectCidade(false);
 		} else {
-			setDisableSelect(true);
+			setDisabledSelectCidade(true);
 		}
 	}, [formData.dadosDaOrganizacao.address.estado]);
 
@@ -60,7 +67,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		}
 
 		try {
-            checkCep(typedCep).then((r) => setCep(r));
+			checkCep(typedCep).then((r) => setCep(r));
 			checkCep(typedCep).then((r) => setCep(r));
 		} catch {
 			console.log('error');
@@ -76,15 +83,14 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 	}, [cep]);
 
 	const handleInscricaoEstadual = () => {
-		setDisableInput(!disabledInput);
 		if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
 			formData.dadosDaOrganizacao.inscricaoEstadual = '';
+			setDisabledInputInscricaoEstadual(false);
 		} else {
 			formData.dadosDaOrganizacao.inscricaoEstadual = 'Isento';
+			setDisabledInputInscricaoEstadual(true);
 		}
 	};
-
-	console.log(formData);
 
 	return (
 		<Form>
@@ -99,6 +105,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						defaultValue='Jurídica'
 						defaultChecked={(formData.dadosDaOrganizacao.pessoa = 'Jurídica')}
 						onChange={setForm}
+						required
 					/>
 					<label htmlFor='Jurídica'>Jurídica</label>
 				</span>
@@ -136,7 +143,8 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					<p>CNPJ *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='99.999.999/9999-99'
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.cnpj'
@@ -155,7 +163,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							className='size2'
 							type='text'
 							name='dadosDaOrganizacao.inscricaoEstadual'
-							disabled={disabledInput}
+							disabled={disabledInputInscricaoEstadual}
 							value={formData.dadosDaOrganizacao.inscricaoEstadual}
 							onChange={setForm}
 						/>
@@ -165,6 +173,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							type='checkbox'
 							value='Isento'
 							onChange={handleInscricaoEstadual}
+							checked={disabledInputInscricaoEstadual}
 						/>
 						<label>Isento</label>
 					</span>
@@ -175,7 +184,8 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					<p>Telefone *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='(99) 99999-9999'
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.telefone'
@@ -237,7 +247,8 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					<p>CEP *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='99999-999'
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.address.cep'
@@ -332,7 +343,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					<select
 						className='size3'
 						name='dadosDaOrganizacao.address.cidade'
-						disabled={disabledSelect}
+						disabled={disabledSelectCidade}
 						value={formData.dadosDaOrganizacao.address.cidade}
 						onChange={setForm}
 					>

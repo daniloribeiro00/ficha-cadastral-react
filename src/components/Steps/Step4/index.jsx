@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import InputMask from 'react-input-mask';
 
 import { Form } from './styles';
 
@@ -154,7 +155,8 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 					<p>Telefone *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='(99) 99999-9999'
 						className='size2'
 						type='text'
 						name='dadosAdministrador.administrador.telefone'
@@ -252,7 +254,8 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 					<p>Telefone *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='(99) 99999-9999'
 						className='size2'
 						id='telefoneTecnico'
 						type='text'

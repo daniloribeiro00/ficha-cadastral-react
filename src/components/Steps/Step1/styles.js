@@ -1,105 +1,107 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
-    border: 1px solid #ddd;
-    border-radius: 0.4rem;
+	border: 1px solid #ddd;
+	border-radius: 0.4rem;
 
-    div {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-    }
+	div {
+		display: flex;
+		align-items: center;
+		margin: 1.5rem 0;
+	}
 
-    .label {
-        width: 350px;
+	.label {
+		width: 350px;
 
-        font-size: 0.9rem;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 600;
-        color: #212121;
+		font-size: 0.9rem;
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: 600;
+		color: #212121;
 
-        p {
-            text-align: right;
-            margin-right: 2rem;
-        }
-    }
+		p {
+			text-align: right;
+			margin-right: 2rem;
+		}
+	}
 
-    .vertical {
-        margin-bottom: 35px;
-    }   
-    
-    .vertical2 {
-        margin-bottom: 72px;
-    }   
+	.vertical {
+		margin-bottom: 35px;
+	}
 
-    .input {
-        display: flex;
-        align-items: center;
+	.vertical2 {
+		margin-bottom: 72px;
+	}
 
-        font-size: 0.9rem;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 300;
-        color: #212121;
+	.input {
+		display: flex;
+		align-items: center;
 
-        label {
-            margin-left: 0.5rem;;
-        }
+		font-size: 0.9rem;
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: 300;
+		color: #212121;
 
-        input, select {
-            height: 35px;
-            border: 1px solid #ddd;
-            padding: 0 0.5rem;
-            transition: 0.2rem;
-            font-size: 0.9rem;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 300;
-        }
+		label {
+			margin-left: 0.5rem;
+		}
 
-        select:disabled {
-            background-color: #ddd;
-        }
+		input,
+		select {
+			height: 35px;
+			border: 1px solid #ddd;
+			padding: 0 0.5rem;
+			transition: 0.2rem;
+			font-size: 0.9rem;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 300;
+		}
 
-        input:focus, select:focus {
-            border: 1px solid #3873b4;
-        }
-    }
+		select:disabled {
+			background-color: #ddd;
+		}
 
-    .buttons {
-        max-width: 800px;
-        margin: 0 auto 3rem auto;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+		input:focus,
+		select:focus {
+			border: 1px solid #3873b4;
+		}
+	}
 
-        button {
-            border: 1px solid green;
-            background-color: #1eb366;
-            color: #fff;
-            font-size: 0.9rem;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 300;
-            padding: 0.6rem 0.8rem;
-            transition: 0.2s;
-        }
+	.buttons {
+		max-width: 800px;
+		margin: 0 auto 3rem auto;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 
-        button:hover {
-            filter: brightness(80%);
-        }
-    }
+		button {
+			border: 1px solid green;
+			background-color: #1eb366;
+			color: #fff;
+			font-size: 0.9rem;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 300;
+			padding: 0.6rem 0.8rem;
+			transition: 0.2s;
+		}
 
-    .size1 {
-        width: 450px;
-    }
+		button:hover {
+			filter: brightness(80%);
+		}
+	}
 
-    .size2 {
-        width: 180px;
-    }
+	.size1 {
+		width: 450px;
+	}
 
-    .size3 {
-        width: 280px;
-    }
+	.size2 {
+		width: 180px;
+	}
 
-    .size4 {
-        width: 100px;
-    }
+	.size3 {
+		width: 280px;
+	}
+
+	.size4 {
+		width: 100px;
+	}
 `;

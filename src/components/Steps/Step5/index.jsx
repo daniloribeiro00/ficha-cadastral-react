@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import InputMask from 'react-input-mask';
 
 import { Form } from './styles';
 
 export const Step5 = ({ formData, setForm, navigation }) => {
     const [disabledInput, setDisabledInput] = useState(false);
-
-    console.log(formData.dadosNFeBoleto);
 
     const handleAdminData = () => {
         formData.dadosNFeBoleto.responsavelFinanceiro = formData.dadosAdministrador.administrador;
@@ -223,7 +222,8 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 					<p>Celular *</p>
 				</span>
 				<span className='input'>
-					<input
+					<InputMask
+						mask='(99) 99999-9999'
 						className='size2'
 						id='telefoneFinanceiro'
 						type='text'
