@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import InputMask from 'react-input-mask';
 import { GlobalContext } from '../../../contexts/AppContext';
 
+import { cpf as checkCpf } from 'cpf-cnpj-validator';
+
 import { Form } from './styles';
 
 export const Step3 = ({ formData, setForm, navigation }) => {
@@ -47,6 +49,24 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 		}
 		setErrors(err);
 	};
+
+	function validateCpf(e) {
+		let err = errors;
+
+		const { value } = e.target;
+
+		let cpf = value.replace(/[^\d]+/g, '');
+
+		if (checkCpf.isValid(cpf)) {
+			err.dadosRepresentanteLegal.cpf = false;
+			document.getElementById(`error.dadosRepresentanteLegal.cpf`).hidden = true;
+		} else {
+			err.dadosRepresentanteLegal.cpf = true;
+			document.getElementById(`error.dadosRepresentanteLegal.cpf`).hidden = false;
+		}
+
+		setErrors(err);
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -95,7 +115,7 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 						name='dadosRepresentanteLegal.cpf'
 						value={formData.dadosRepresentanteLegal.cpf}
 						onChange={setForm}
-						onBlur={(e) => validate(e, 14)}
+						onBlur={(e) => validateCpf(e)}
 						required
 					/>
 				</span>
@@ -105,7 +125,7 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 				id='error.dadosRepresentanteLegal.cpf'
 				hidden={true}
 			>
-				Deve ser um CPF (11 números)!
+				Insira um CPF válido!
 			</span>
             <div>
 				<span className='label'>

@@ -56,4 +56,9 @@ export const Buttons = styled.div`
 	button:hover {
 		filter: brightness(80%);
 	}
+
+	.showCompany {
+		border: 1px solid blue;
+		background-color: #3873b4;
+	}
 `;

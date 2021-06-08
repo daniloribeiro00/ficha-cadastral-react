@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import { GlobalContext } from '../../../contexts/AppContext';
+import { PasswordMeter1 } from '../../PasswordMeter1';
+import { PasswordMeter2 } from '../../PasswordMeter2';
 
 import { Form } from './styles';
 
@@ -16,16 +18,24 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 		setDisabledTecnicoInput(!disabledTecnicoInput);
 
 		err.dadosAdministrador.tecnico.nomeCompleto = false;
-		document.getElementById(`error.dadosAdministrador.tecnico.nomeCompleto`).hidden = true;
+		document.getElementById(
+			`error.dadosAdministrador.tecnico.nomeCompleto`
+		).hidden = true;
 
 		err.dadosAdministrador.tecnico.senha = false;
-		document.getElementById(`error.dadosAdministrador.tecnico.senha`).hidden = true;
+		document.getElementById(
+			`error.dadosAdministrador.tecnico.senha`
+		).hidden = true;
 
 		err.dadosAdministrador.tecnico.confirmaSenha = false;
-		document.getElementById(`error.dadosAdministrador.tecnico.confirmaSenha`).hidden = true;
-		
+		document.getElementById(
+			`error.dadosAdministrador.tecnico.confirmaSenha`
+		).hidden = true;
+
 		err.dadosAdministrador.tecnico.telefone = false;
-		document.getElementById(`error.dadosAdministrador.tecnico.telefone`).hidden = true;
+		document.getElementById(
+			`error.dadosAdministrador.tecnico.telefone`
+		).hidden = true;
 	};
 
 	useEffect(() => {
@@ -34,7 +44,7 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				formData.dadosAdministrador.administrador;
 			document.getElementById('confirmaSenhaTecnico').value =
 				formData.dadosAdministrador.administrador.senha;
-		} 
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [disabledTecnicoInput]);
 
@@ -54,10 +64,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 
 		if (document.getElementById('confirmaSenhaAdministrador').value === value) {
 			err.dadosAdministrador.administrador.confirmaSenha = false;
-			document.getElementById(`error.dadosAdministrador.administrador.confirmaSenha`).hidden = true;
+			document.getElementById(
+				`error.dadosAdministrador.administrador.confirmaSenha`
+			).hidden = true;
 		} else {
 			err.dadosAdministrador.administrador.confirmaSenha = true;
-			document.getElementById(`error.dadosAdministrador.administrador.confirmaSenha`).hidden = false;
+			document.getElementById(
+				`error.dadosAdministrador.administrador.confirmaSenha`
+			).hidden = false;
 		}
 	};
 
@@ -67,10 +81,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 
 		if (formData.dadosAdministrador.administrador.senha === value) {
 			err.dadosAdministrador.administrador.confirmaSenha = false;
-			document.getElementById(`error.dadosAdministrador.administrador.confirmaSenha`).hidden = true;
+			document.getElementById(
+				`error.dadosAdministrador.administrador.confirmaSenha`
+			).hidden = true;
 		} else {
 			err.dadosAdministrador.administrador.confirmaSenha = true;
-			document.getElementById(`error.dadosAdministrador.administrador.confirmaSenha`).hidden = false;
+			document.getElementById(
+				`error.dadosAdministrador.administrador.confirmaSenha`
+			).hidden = false;
 		}
 	};
 
@@ -81,10 +99,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 
 		if (document.getElementById('confirmaSenhaTecnico').value === value) {
 			err.dadosAdministrador.tecnico.confirmaSenha = false;
-			document.getElementById(`error.dadosAdministrador.tecnico.confirmaSenha`).hidden = true;
+			document.getElementById(
+				`error.dadosAdministrador.tecnico.confirmaSenha`
+			).hidden = true;
 		} else {
 			err.dadosAdministrador.tecnico.confirmaSenha = true;
-			document.getElementById(`error.dadosAdministrador.tecnico.confirmaSenha`).hidden = false;
+			document.getElementById(
+				`error.dadosAdministrador.tecnico.confirmaSenha`
+			).hidden = false;
 		}
 	};
 
@@ -94,10 +116,14 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 
 		if (formData.dadosAdministrador.tecnico.senha === value) {
 			err.dadosAdministrador.tecnico.confirmaSenha = false;
-			document.getElementById(`error.dadosAdministrador.tecnico.confirmaSenha`).hidden = true;
+			document.getElementById(
+				`error.dadosAdministrador.tecnico.confirmaSenha`
+			).hidden = true;
 		} else {
 			err.dadosAdministrador.tecnico.confirmaSenha = true;
-			document.getElementById(`error.dadosAdministrador.tecnico.confirmaSenha`).hidden = false;
+			document.getElementById(
+				`error.dadosAdministrador.tecnico.confirmaSenha`
+			).hidden = false;
 		}
 	};
 
@@ -141,13 +167,17 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		let exists1 = Object.values(errors.dadosAdministrador.administrador).includes(true);
-		let exists2 = Object.values(errors.dadosAdministrador.tecnico).includes(true);
+		let exists1 = Object.values(
+			errors.dadosAdministrador.administrador
+		).includes(true);
+		let exists2 = Object.values(errors.dadosAdministrador.tecnico).includes(
+			true
+		);
 
 		if (exists1 === false && exists2 === false) {
-			navigation.next()
+			navigation.next();
 		}
-	}
+	};
 
 	return (
 		<Form onSubmit={handleSubmit}>
@@ -208,6 +238,11 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 						onChange={setForm}
 						onBlur={handleCheckPasswordAdministrador1}
 						required
+					/>
+				</span>
+				<span>
+					<PasswordMeter1
+						password={formData.dadosAdministrador.administrador.senha}
 					/>
 				</span>
 			</div>
@@ -346,6 +381,13 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 						required
 					/>
 				</span>
+				<div className='passwordMeter'>
+					<span hidden={disabledTecnicoInput}>
+						<PasswordMeter2
+							password={formData.dadosAdministrador.tecnico.senha}
+						/>
+					</span>
+				</div>
 			</div>
 			<span
 				className='error'

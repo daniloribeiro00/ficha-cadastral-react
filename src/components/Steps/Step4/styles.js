@@ -128,6 +128,10 @@ export const Form = styled.form`
         }
     }
 
+    .passwordMeter {
+        height: 10px;
+    }
+
     .error {
 		font-family: 'Open Sans', sans-serif;
 		font-size: 14px;

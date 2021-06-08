@@ -5,6 +5,7 @@ import InputMask from 'react-input-mask';
 import { Form } from './styles';
 
 import checkCep from 'cep-promise';
+import { cnpj as checkCnpj } from 'cpf-cnpj-validator';
 import { GlobalContext } from '../../../contexts/AppContext';
 
 export const Step1 = ({ formData, setForm, navigation }) => {
@@ -30,12 +31,19 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 			return;
 		}
 
-		try {
-			checkCep(typedCep).then((r) => setCep(r));
-			checkCep(typedCep).then((r) => setCep(r));
-		} catch {
-			console.log('error');
-		}
+		checkCep(typedCep).then((r) => setCep(r));
+		checkCep(typedCep)
+			.then((r) => setCep(r))
+			.catch(handleInvalidCep);
+	};
+
+	const handleInvalidCep = (e) => {
+		let err = errors;
+		err.dadosDaOrganizacao.address.cep = true;
+		document.getElementById(
+			`error.dadosDaOrganizacao.address.cep`
+		).hidden = false;
+		setErrors(err);
 	};
 
 	useEffect(() => {
@@ -47,14 +55,23 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 	}, [cep]);
 
 	const handleInscricaoEstadual = (e) => {
+		let err = errors;
 		if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
 			formData.dadosDaOrganizacao.inscricaoEstadual = '';
 			setDisabledInputInscricaoEstadual(false);
+			err.dadosDaOrganizacao.inscricaoEstadual = true;
+			document.getElementById(
+				`error.dadosDaOrganizacao.inscricaoEstadual`
+			).hidden = false;
 		} else {
 			formData.dadosDaOrganizacao.inscricaoEstadual = 'Isento';
 			setDisabledInputInscricaoEstadual(true);
+			err.dadosDaOrganizacao.inscricaoEstadual = false;
+			document.getElementById(
+				`error.dadosDaOrganizacao.inscricaoEstadual`
+			).hidden = true;
 		}
-		validate(e);
+		setErrors(err);
 	};
 
 	const validate = (e, chNumber) => {
@@ -69,10 +86,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		if (path.length <= 2) {
 			path1 = path[0];
 			path2 = path[1];
-			if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
-				err[path1][path2] = false;
-				document.getElementById(`error.${path1}.${path2}`).hidden = true;
-			} else if (formData[path1][path2].length < chNumber) {
+			if (formData[path1][path2].length < chNumber) {
 				err[path1][path2] = true;
 				document.getElementById(`error.${path1}.${path2}`).hidden = false;
 			} else {
@@ -98,6 +112,24 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		setErrors(err);
 	};
 
+	function validateCnpj(e) {
+		let err = errors;
+
+		const { value } = e.target;
+
+		let cnpj = value.replace(/[^\d]+/g, '');
+
+		if (checkCnpj.isValid(cnpj)) {
+			err.dadosDaOrganizacao.cnpj = false;
+			document.getElementById(`error.dadosDaOrganizacao.cnpj`).hidden = true;
+		} else {
+			err.dadosDaOrganizacao.cnpj = true;
+			document.getElementById(`error.dadosDaOrganizacao.cnpj`).hidden = false;
+		}
+
+		setErrors(err);
+	}
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -105,29 +137,36 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 
 		if (formData.dadosDaOrganizacao.tipoEmpresa === '') {
 			err.dadosDaOrganizacao.tipoEmpresa = true;
-			document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = false;
+			document.getElementById(
+				`error.dadosDaOrganizacao.tipoEmpresa`
+			).hidden = false;
 		} else {
 			err.dadosDaOrganizacao.tipoEmpresa = false;
-			document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = true;
+			document.getElementById(
+				`error.dadosDaOrganizacao.tipoEmpresa`
+			).hidden = true;
 		}
 
 		setErrors(err);
 
-		let exists = Object.values(errors.dadosDaOrganizacao).includes(true);
+		let exists1 = Object.values(errors.dadosDaOrganizacao).includes(true);
+		let exists2 = Object.values(errors.dadosDaOrganizacao.address).includes(true);
 
-		if (exists === false) {
-			navigation.next()
+		if (exists1 === false && exists2 === false) {
+			navigation.next();
 		}
-	}
+	};
 
 	useEffect(() => {
 		let err = errors;
 
 		err.dadosDaOrganizacao.tipoEmpresa = false;
-		document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = true;
-		
+		document.getElementById(
+			`error.dadosDaOrganizacao.tipoEmpresa`
+		).hidden = true;
+
 		setErrors(err);
-	}, [formData.dadosDaOrganizacao.tipoEmpresa])
+	}, [formData.dadosDaOrganizacao.tipoEmpresa]);
 
 	return (
 		<Form onSubmit={handleSubmit}>
@@ -206,13 +245,13 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.cnpj'
 						value={formData.dadosDaOrganizacao.cnpj}
 						onChange={setForm}
-						onBlur={(e) => validate(e, 18)}
+						onBlur={(e) => validateCnpj(e)}
 						required
 					/>
 				</span>
 			</div>
 			<span className='error' id='error.dadosDaOrganizacao.cnpj' hidden={true}>
-				Deve ser um CNPJ (14 números)!
+				Deve ser um CNPJ válido (14 números)!
 			</span>
 			<div>
 				<span className='label vertical'>
@@ -303,7 +342,9 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							}
 							onChange={setForm}
 						/>
-						<label htmlFor='Integrador / representante de software'>Integrador / representante de software</label>
+						<label htmlFor='Integrador / representante de software'>
+							Integrador / representante de software
+						</label>
 					</span>
 					<span className='input'>
 						<input
@@ -350,7 +391,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 				id='error.dadosDaOrganizacao.address.cep'
 				hidden={true}
 			>
-				Deve ter no mínimo 8 caracteres!
+				Insira um CEP válido!
 			</span>
 			<div>
 				<span className='label'>

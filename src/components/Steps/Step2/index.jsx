@@ -288,8 +288,10 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		let err = errors;
 
 		if (formData.informacoesAdicionais.linguagensDeProgramacao.length < 1) {
-			err.informacoesAdicionais.linguagensDeProgramacao = true;
-			document.getElementById(`error.informacoesAdicionais.linguagensDeProgramacao`).hidden = false;
+			if (formData.informacoesAdicionais.outrasLinguagens.length < 1) {
+				err.informacoesAdicionais.linguagensDeProgramacao = true;
+				document.getElementById(`error.informacoesAdicionais.linguagensDeProgramacao`).hidden = false;
+			}
 		} else {
 			err.informacoesAdicionais.linguagensDeProgramacao = false;
 			document.getElementById(`error.informacoesAdicionais.linguagensDeProgramacao`).hidden = true;
@@ -312,8 +314,10 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		}
 
 		if (formData.informacoesAdicionais.formaComercializacaoErp.length < 1) {
-			err.informacoesAdicionais.formaComercializacaoErp = true;
-			document.getElementById(`error.informacoesAdicionais.formaComercializacaoErp`).hidden = false;
+			if (formData.informacoesAdicionais.outrasFormas.length < 1) {
+				err.informacoesAdicionais.formaComercializacaoErp = true;
+				document.getElementById(`error.informacoesAdicionais.formaComercializacaoErp`).hidden = false;
+			}
 		} else {
 			err.informacoesAdicionais.formaComercializacaoErp = false;
 			document.getElementById(`error.informacoesAdicionais.formaComercializacaoErp`).hidden = true;
@@ -393,7 +397,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 							type='checkbox'
 							value='Nenhuma'
 							name='informacoesAdicionais.linguagensDeProgramacao'
-							onChange={(e) => handleLinguagens(e)}
+							onChange={validate}
 							checked={languageChecked[6].isChecked}
 						/>
 						<label>Nenhuma</label>
@@ -407,6 +411,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 							placeholder='Separe por vírgula as linguagens. Ex: Go, Lua, .NET'
 							onChange={(e) => handleOutrasLinguagens(e)}
 							disabled={disabledLanguageInput}
+							required
 						/>
 					</span>
 				</div>
@@ -785,6 +790,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 							placeholder='Outros'
 							onChange={(e) => handleOutrasFormas(e)}
 							disabled={disabledFormasInput}
+							required
 						/>
 					</span>
 				</div>

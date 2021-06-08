@@ -6,7 +6,15 @@ import { FinalMessage, Buttons } from './styles';
 export const Success = ({ navigation }) => {
 	const { companies } = useContext(GlobalContext);
 
-	console.log(companies);
+	const showCompany = () => {
+		console.log('Empresas cadastradas: ', companies);
+		console.log('Última empresa cadastrada: ', companies[companies.length - 1]);
+		alert('Verifique o console do navegador!')
+	}
+
+	const reload = () => {
+		window.location.reload()
+	}
 
 	return (
 		<>
@@ -22,7 +30,12 @@ export const Success = ({ navigation }) => {
 				</div>
 			</FinalMessage>
 			<Buttons>
-				<button onClick={() => navigation.next()}>
+				<button className='showCompany' onClick={showCompany}>
+					Exibir empresa cadastrada
+				</button>
+			</Buttons>
+			<Buttons>
+				<button onClick={reload}>
 					Cadastrar nova empresa
 				</button>
 			</Buttons>

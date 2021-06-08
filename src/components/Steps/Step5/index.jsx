@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import { GlobalContext } from '../../../contexts/AppContext';
+import { PasswordMeter3 } from '../../PasswordMeter3';
 
 import { Form } from './styles';
 
@@ -288,6 +289,13 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 						required
 					/>
 				</span>
+				<div className='passwordMeter'>
+					<span hidden={disabledFinanceiroInput}>
+						<PasswordMeter3
+							password={formData.dadosNFeBoleto.responsavelFinanceiro.senha}
+						/>
+					</span>
+				</div>
 			</div>
 			<span
 				className='error'

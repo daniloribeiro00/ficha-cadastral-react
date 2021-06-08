@@ -80,7 +80,7 @@ export const AppContext = ({ children }) => {
 	const [formData, setForm] = useForm(defaultData);
 	const { step, navigation } = useStep({
 		steps,
-		initialStep: 3,
+		initialStep: 0,
 	});
 
 	const [companies, setCompanies] = useState(() => {
@@ -105,6 +105,7 @@ export const AppContext = ({ children }) => {
 			tipoEmpresa: false,
 			address: {
 				cep: false,
+				cepInvalido: false,
 				endereco: false,
 				numero: false,
 				bairro: false,
