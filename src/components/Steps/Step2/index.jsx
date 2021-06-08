@@ -1,199 +1,23 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useEffect } from 'react';
+import { GlobalContext } from '../../../contexts/AppContext';
 
 import { Form } from './styles';
 
 export const Step2 = ({ formData, setForm, navigation }) => {
-	const [disabledLanguageInput, setDisabledLanguageInput] = useState(true);
-	const [disabledFormasInput, setDisabledFormasInput] = useState(true);
-	const [languageChecked, setLanguageChecked] = useState([
-		{
-			value: 'Delphi',
-			isChecked: false,
-		},
-		{
-			value: 'Visual Basic',
-			isChecked: false,
-		},
-		{
-			value: 'C#',
-			isChecked: false,
-		},
-		{
-			value: 'PHP',
-			isChecked: false,
-		},
-		{
-			value: 'Java',
-			isChecked: false,
-		},
-		{
-			value: 'Outras',
-			isChecked: false,
-		},
-		{
-			value: 'Nenhuma',
-			isChecked: false,
-		},
-	]);
-	const [ramoChecked, setRamoChecked] = useState([
-		{
-			value: 'Varejo',
-			isChecked: false,
-		},
-		{
-			value: 'Indústria',
-			isChecked: false,
-		},
-		{
-			value: 'Comércio',
-			isChecked: false,
-		},
-		{
-			value: 'Transporte',
-			isChecked: false,
-		},
-		{
-			value: 'Serviço',
-			isChecked: false,
-		},
-	]);
-	const [estadoChecked, setEstadoChecked] = useState([
-		{
-			value: 'Todos',
-			isChecked: false,
-		},
-		{
-			value: 'AC',
-			isChecked: false,
-		},
-		{
-			value: 'AL',
-			isChecked: false,
-		},
-		{
-			value: 'AM',
-			isChecked: false,
-		},
-		{
-			value: 'AP',
-			isChecked: false,
-		},
-		{
-			value: 'BA',
-			isChecked: false,
-		},
-		{
-			value: 'CE',
-			isChecked: false,
-		},
-		{
-			value: 'DF',
-			isChecked: false,
-		},
-		{
-			value: 'ES',
-			isChecked: false,
-		},
-		{
-			value: 'GO',
-			isChecked: false,
-		},
-		{
-			value: 'MA',
-			isChecked: false,
-		},
-		{
-			value: 'MG',
-			isChecked: false,
-		},
-		{
-			value: 'MS',
-			isChecked: false,
-		},
-		{
-			value: 'MT',
-			isChecked: false,
-		},
-		{
-			value: 'PA',
-			isChecked: false,
-		},
-		{
-			value: 'PB',
-			isChecked: false,
-		},
-		{
-			value: 'PE',
-			isChecked: false,
-		},
-		{
-			value: 'PI',
-			isChecked: false,
-		},
-		{
-			value: 'PR',
-			isChecked: false,
-		},
-		{
-			value: 'RJ',
-			isChecked: false,
-		},
-		{
-			value: 'RN',
-			isChecked: false,
-		},
-		{
-			value: 'RO',
-			isChecked: false,
-		},
-		{
-			value: 'RR',
-			isChecked: false,
-		},
-		{
-			value: 'RS',
-			isChecked: false,
-		},
-		{
-			value: 'SC',
-			isChecked: false,
-		},
-		{
-			value: 'SE',
-			isChecked: false,
-		},
-		{
-			value: 'SP',
-			isChecked: false,
-		},
-		{
-			value: 'TO',
-			isChecked: false,
-		},
-	]);
-    const [formaChecked, setFormaChecked] = useState([
-        {
-			value: 'Locação',
-			isChecked: false,
-		},
-		{
-			value: 'Venda',
-			isChecked: false,
-		},
-		{
-			value: 'Uso interno',
-			isChecked: false,
-		},
-		{
-			value: 'Outro',
-			isChecked: false,
-		},
-		{
-			value: 'Nenhuma',
-			isChecked: false,
-		},
-    ])
+	const {
+		disabledLanguageInput,
+		setDisabledLanguageInput,
+		disabledFormasInput,
+		setDisabledFormasInput,
+		languageChecked,
+		setLanguageChecked,
+		ramoChecked,
+		setRamoChecked,
+		estadoChecked,
+		setEstadoChecked,
+		formaChecked,
+		setFormaChecked,
+	} = useContext(GlobalContext);
 
 	const handleLinguagens = (e) => {
 		const { value } = e.target;
@@ -253,6 +77,19 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		formData.informacoesAdicionais.outrasLinguagens = splitLanguage;
 	};
 
+	useEffect(() => {
+		if (document.getElementById('outrasLinguagensInput').value === '') {
+			document.getElementById('outrasLinguagensInput').value = formData.informacoesAdicionais.outrasLinguagens;
+		}
+		if (document.getElementById('outrasFormasInput').value === '') {
+			document.getElementById('outrasFormasInput').value = formData.informacoesAdicionais.outrasFormas;
+		}
+		if (document.getElementById('clientesInput').value === '') {
+			document.getElementById('clientesInput').value = formData.informacoesAdicionais.principaisClientes;
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	const handleRamoDeAtividade = (e) => {
 		const { value } = e.target;
 		let ramos = ramoChecked;
@@ -278,47 +115,49 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		let estados = estadoChecked;
 		const i = estados.findIndex((e) => e.value === value);
 		if (value === 'Todos') {
-            if (formData.informacoesAdicionais.estadosQuePossuiClientes.length === 27 )  {
-                formData.informacoesAdicionais.estadosQuePossuiClientes = [];
-                estados.forEach((e, i) => {
-                    estados[i].isChecked = false;
-                });
-                setEstadoChecked([...estadoChecked, estados]);
-            } else {
-                formData.informacoesAdicionais.estadosQuePossuiClientes = [
-                    'AC',
-                    'AL',
-                    'AM',
-                    'AP',
-                    'BA',
-                    'CE',
-                    'DF',
-                    'ES',
-                    'GO',
-                    'MA',
-                    'MG',
-                    'MS',
-                    'MT',
-                    'PA',
-                    'PB',
-                    'PE',
-                    'PI',
-                    'PR',
-                    'RJ',
-                    'RN',
-                    'RO',
-                    'RR',
-                    'RS',
-                    'SC',
-                    'SE',
-                    'SP',
-                    'TO',
-                ];
-                estados.forEach((e, i) => {
-                    estados[i].isChecked = true;
-                });
-                setEstadoChecked([...estadoChecked, estados]);
-            }			
+			if (
+				formData.informacoesAdicionais.estadosQuePossuiClientes.length === 27
+			) {
+				formData.informacoesAdicionais.estadosQuePossuiClientes = [];
+				estados.forEach((e, i) => {
+					estados[i].isChecked = false;
+				});
+				setEstadoChecked([...estadoChecked, estados]);
+			} else {
+				formData.informacoesAdicionais.estadosQuePossuiClientes = [
+					'AC',
+					'AL',
+					'AM',
+					'AP',
+					'BA',
+					'CE',
+					'DF',
+					'ES',
+					'GO',
+					'MA',
+					'MG',
+					'MS',
+					'MT',
+					'PA',
+					'PB',
+					'PE',
+					'PI',
+					'PR',
+					'RJ',
+					'RN',
+					'RO',
+					'RR',
+					'RS',
+					'SC',
+					'SE',
+					'SP',
+					'TO',
+				];
+				estados.forEach((e, i) => {
+					estados[i].isChecked = true;
+				});
+				setEstadoChecked([...estadoChecked, estados]);
+			}
 		} else if (
 			formData.informacoesAdicionais.estadosQuePossuiClientes.includes(value)
 		) {
@@ -337,13 +176,11 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		}
 	};
 
-    const handleFormas = (e) => {
+	const handleFormas = (e) => {
 		const { value } = e.target;
 		let formas = formaChecked;
 		const i = formas.findIndex((e) => e.value === value);
-		const indexNenhuma = formaChecked.findIndex(
-			(e) => e.value === 'Nenhuma'
-		);
+		const indexNenhuma = formaChecked.findIndex((e) => e.value === 'Nenhuma');
 		if (value === 'Nenhuma') {
 			formData.informacoesAdicionais.formaComercializacaoErp = ['Nenhuma'];
 			formas.forEach((e, i) => {
@@ -389,20 +226,20 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		}
 	};
 
-    const handleOutrasFormas = (e) => {
+	const handleOutrasFormas = (e) => {
 		const { value } = e.target;
 		let splitForma = value.split(',');
 		formData.informacoesAdicionais.outrasFormas = splitForma;
 	};
 
-    const handlePrincipaisClientes = (e) => {
-        const { value } = e.target;
+	const handlePrincipaisClientes = (e) => {
+		const { value } = e.target;
 		let splitClientes = value.split(',');
-        formData.informacoesAdicionais.principaisClientes = splitClientes;
-    }
+		formData.informacoesAdicionais.principaisClientes = splitClientes;
+	};
 
 	return (
-		<Form>
+		<Form onSubmit={() => navigation.next()}>
 			<h1>
 				Preencha os dados abaixo para entendermos mais sobre a sua organização.
 			</h1>
@@ -788,7 +625,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							className='size1'
 							type='text'
-                            id='outrasFormasInput'
+							id='outrasFormasInput'
 							placeholder='Outros'
 							onChange={(e) => handleOutrasFormas(e)}
 							disabled={disabledFormasInput}
@@ -803,6 +640,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<input
 						className='size1'
+						id='clientesInput'
 						type='text'
 						onChange={(e) => handlePrincipaisClientes(e)}
 					/>
@@ -838,7 +676,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 			</div>
 			<div className='buttons'>
 				<button onClick={() => navigation.previous()}>Voltar</button>
-				<button onClick={() => navigation.next()}>Próxima</button>
+				<button type='submit'>Próxima</button>
 			</div>
 		</Form>
 	);

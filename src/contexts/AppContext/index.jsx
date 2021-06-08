@@ -109,6 +109,237 @@ export const AppContext = ({ children }) => {
 		neighborhood: '',
 	});
 
+	const loadUf =  () => {
+		fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+			.then((response) => response.json())
+			.then((data) => {
+				data.sort((a, b) => a.nome.localeCompare(b.nome));
+				setListUf([{}, ...data]);
+			});
+	};
+
+	useEffect(() => {
+		loadUf();
+	}, []);
+
+	const loadCity = async (id) => {
+		await fetch(
+			`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				data.sort((a, b) => a.nome.localeCompare(b.nome));
+				setListCity([{}, ...data]);
+			});
+	};
+
+	useEffect(() => {
+		if (formData.dadosDaOrganizacao.address.estado) {
+			loadCity(formData.dadosDaOrganizacao.address.estado);
+			setDisabledSelectCidade(false);
+		} else {
+			setDisabledSelectCidade(true);
+		}
+	}, [formData.dadosDaOrganizacao.address.estado]);
+
+	// Step 2
+	const [disabledLanguageInput, setDisabledLanguageInput] = useState(true);
+	const [disabledFormasInput, setDisabledFormasInput] = useState(true);
+	const [languageChecked, setLanguageChecked] = useState([
+		{
+			value: 'Delphi',
+			isChecked: false,
+		},
+		{
+			value: 'Visual Basic',
+			isChecked: false,
+		},
+		{
+			value: 'C#',
+			isChecked: false,
+		},
+		{
+			value: 'PHP',
+			isChecked: false,
+		},
+		{
+			value: 'Java',
+			isChecked: false,
+		},
+		{
+			value: 'Outras',
+			isChecked: false,
+		},
+		{
+			value: 'Nenhuma',
+			isChecked: false,
+		},
+	]);
+	const [ramoChecked, setRamoChecked] = useState([
+		{
+			value: 'Varejo',
+			isChecked: false,
+		},
+		{
+			value: 'Indústria',
+			isChecked: false,
+		},
+		{
+			value: 'Comércio',
+			isChecked: false,
+		},
+		{
+			value: 'Transporte',
+			isChecked: false,
+		},
+		{
+			value: 'Serviço',
+			isChecked: false,
+		},
+	]);
+	const [estadoChecked, setEstadoChecked] = useState([
+		{
+			value: 'Todos',
+			isChecked: false,
+		},
+		{
+			value: 'AC',
+			isChecked: false,
+		},
+		{
+			value: 'AL',
+			isChecked: false,
+		},
+		{
+			value: 'AM',
+			isChecked: false,
+		},
+		{
+			value: 'AP',
+			isChecked: false,
+		},
+		{
+			value: 'BA',
+			isChecked: false,
+		},
+		{
+			value: 'CE',
+			isChecked: false,
+		},
+		{
+			value: 'DF',
+			isChecked: false,
+		},
+		{
+			value: 'ES',
+			isChecked: false,
+		},
+		{
+			value: 'GO',
+			isChecked: false,
+		},
+		{
+			value: 'MA',
+			isChecked: false,
+		},
+		{
+			value: 'MG',
+			isChecked: false,
+		},
+		{
+			value: 'MS',
+			isChecked: false,
+		},
+		{
+			value: 'MT',
+			isChecked: false,
+		},
+		{
+			value: 'PA',
+			isChecked: false,
+		},
+		{
+			value: 'PB',
+			isChecked: false,
+		},
+		{
+			value: 'PE',
+			isChecked: false,
+		},
+		{
+			value: 'PI',
+			isChecked: false,
+		},
+		{
+			value: 'PR',
+			isChecked: false,
+		},
+		{
+			value: 'RJ',
+			isChecked: false,
+		},
+		{
+			value: 'RN',
+			isChecked: false,
+		},
+		{
+			value: 'RO',
+			isChecked: false,
+		},
+		{
+			value: 'RR',
+			isChecked: false,
+		},
+		{
+			value: 'RS',
+			isChecked: false,
+		},
+		{
+			value: 'SC',
+			isChecked: false,
+		},
+		{
+			value: 'SE',
+			isChecked: false,
+		},
+		{
+			value: 'SP',
+			isChecked: false,
+		},
+		{
+			value: 'TO',
+			isChecked: false,
+		},
+	]);
+    const [formaChecked, setFormaChecked] = useState([
+        {
+			value: 'Locação',
+			isChecked: false,
+		},
+		{
+			value: 'Venda',
+			isChecked: false,
+		},
+		{
+			value: 'Uso interno',
+			isChecked: false,
+		},
+		{
+			value: 'Outro',
+			isChecked: false,
+		},
+		{
+			value: 'Nenhuma',
+			isChecked: false,
+		},
+    ])
+
+	// Step 4
+	const [disabledTecnicoInput, setDisabledTecnicoInput] = useState(false);
+
+	// Step 5
+	const [disabledFinanceiroInput, setDisabledFinanceiroInput] = useState(false);
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -128,6 +359,22 @@ export const AppContext = ({ children }) => {
 				setListCity,
 				cep,
 				setCep,
+				disabledLanguageInput,
+				setDisabledLanguageInput,
+				disabledFormasInput,
+				setDisabledFormasInput,
+				languageChecked,
+				setLanguageChecked,
+				ramoChecked,
+				setRamoChecked,
+				estadoChecked,
+				setEstadoChecked,
+				formaChecked,
+				setFormaChecked,
+				disabledTecnicoInput,
+				setDisabledTecnicoInput,
+				disabledFinanceiroInput,
+				setDisabledFinanceiroInput,
 			}}
 		>
 			{children}

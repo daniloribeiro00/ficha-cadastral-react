@@ -5,7 +5,7 @@ import { Form } from './styles';
 
 export const Step3 = ({ formData, setForm, navigation }) => {
     return (
-        <Form>
+        <Form onSubmit={() => navigation.next()}>
             <div>
 				<span className='label'>
 					<p>Nome completo *</p>
@@ -41,7 +41,7 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
-						type='text'
+						type='email'
 						name='dadosRepresentanteLegal.email'
 						value={formData.dadosRepresentanteLegal.email}
 						onChange={setForm}
@@ -79,7 +79,7 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 			</div>
             <div className='buttons'>
 				<button onClick={() => navigation.previous()}>Voltar</button>
-				<button onClick={() => navigation.next()}>Próxima</button>
+				<button type='submit'>Próxima</button>
 			</div>
         </Form>
     )

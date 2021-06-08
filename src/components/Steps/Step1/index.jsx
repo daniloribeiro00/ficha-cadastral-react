@@ -8,54 +8,15 @@ import checkCep from 'cep-promise';
 import { GlobalContext } from '../../../contexts/AppContext';
 
 export const Step1 = ({ formData, setForm, navigation }) => {
-
-	console.log(formData.dadosDaOrganizacao);
-
 	const {
 		disabledSelectCidade,
-		setDisabledSelectCidade,
 		disabledInputInscricaoEstadual,
 		setDisabledInputInscricaoEstadual,
 		listUf,
-		setListUf,
 		listCity,
-		setListCity,
 		cep,
 		setCep,
 	} = useContext(GlobalContext);
-
-	useEffect(() => {
-		loadUf();
-	}, []);
-
-	useEffect(() => {
-		if (formData.dadosDaOrganizacao.address.estado) {
-			loadCity(formData.dadosDaOrganizacao.address.estado);
-			setDisabledSelectCidade(false);
-		} else {
-			setDisabledSelectCidade(true);
-		}
-	}, [formData.dadosDaOrganizacao.address.estado]);
-
-	const loadUf = async () => {
-		await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-			.then((response) => response.json())
-			.then((data) => {
-				data.sort((a, b) => a.nome.localeCompare(b.nome));
-				setListUf([{}, ...data]);
-			});
-	};
-
-	const loadCity = async (id) => {
-		await fetch(
-			`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				data.sort((a, b) => a.nome.localeCompare(b.nome));
-				setListCity([{}, ...data]);
-			});
-	};
 
 	const handleChangeCep = (e) => {
 		const { value } = e.target;
@@ -93,7 +54,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 	};
 
 	return (
-		<Form>
+		<Form onSubmit={() => navigation.next()}>
 			<div>
 				<span className='label'>
 					<p>Pessoa</p>
@@ -121,6 +82,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.razaoSocial'
 						value={formData.dadosDaOrganizacao.razaoSocial}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -135,6 +97,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.nomeFantasia'
 						value={formData.dadosDaOrganizacao.nomeFantasia}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -150,6 +113,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.cnpj'
 						value={formData.dadosDaOrganizacao.cnpj}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -166,6 +130,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							disabled={disabledInputInscricaoEstadual}
 							value={formData.dadosDaOrganizacao.inscricaoEstadual}
 							onChange={setForm}
+							required
 						/>
 					</span>
 					<span className='input'>
@@ -191,6 +156,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.telefone'
 						value={formData.dadosDaOrganizacao.telefone}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -255,6 +221,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						onBlur={handleChangeCep}
 						value={formData.dadosDaOrganizacao.address.cep}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -269,6 +236,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.endereco'
 						value={formData.dadosDaOrganizacao.address.endereco}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -283,6 +251,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.numero'
 						value={formData.dadosDaOrganizacao.address.numero}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -311,6 +280,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.bairro'
 						value={formData.dadosDaOrganizacao.address.bairro}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>
@@ -326,6 +296,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						// onChange={(e) => setUf(e.target.value)}
 						value={formData.dadosDaOrganizacao.address.estado}
 						onChange={setForm}
+						required
 					>
 						{listUf.map((a, index) => (
 							<option key={index} value={a.sigla}>
@@ -346,6 +317,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						disabled={disabledSelectCidade}
 						value={formData.dadosDaOrganizacao.address.cidade}
 						onChange={setForm}
+						required
 					>
 						{formData.dadosDaOrganizacao.address.estado !== '' &&
 							listCity.map((a, index) => (
@@ -357,7 +329,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 				</span>
 			</div>
 			<div className='buttons'>
-				<button onClick={() => navigation.next()}>Próxima</button>
+				<button type='submit'>Próxima</button>
 			</div>
 		</Form>
 	);

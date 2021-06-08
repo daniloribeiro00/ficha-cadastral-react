@@ -1,44 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import InputMask from 'react-input-mask';
+import { GlobalContext } from '../../../contexts/AppContext';
 
 import { Form } from './styles';
 
 export const Step5 = ({ formData, setForm, navigation }) => {
-    const [disabledInput, setDisabledInput] = useState(false);
+	const { disabledFinanceiroInput, setDisabledFinanceiroInput } =
+		useContext(GlobalContext);
 
-    const handleAdminData = () => {
-        formData.dadosNFeBoleto.responsavelFinanceiro = formData.dadosAdministrador.administrador;
-		setDisabledInput(!disabledInput);
-    }
+	const handleAdminData = () => {
+		formData.dadosNFeBoleto.responsavelFinanceiro =
+			formData.dadosAdministrador.administrador;
+		setDisabledFinanceiroInput(!disabledFinanceiroInput);
+	};
 
-    useEffect(() => {
-		if (disabledInput === true) {
-			formData.dadosNFeBoleto.responsavelFinanceiro = formData.dadosAdministrador.administrador;
-			document.getElementById('confirmaSenhaFinanceiro').value = formData.dadosAdministrador.administrador.senha;
+	useEffect(() => {
+		if (disabledFinanceiroInput === true) {
+			formData.dadosNFeBoleto.responsavelFinanceiro =
+				formData.dadosAdministrador.administrador;
+			document.getElementById('confirmaSenhaFinanceiro').value =
+				formData.dadosAdministrador.administrador.senha;
 		} else {
 			formData.dadosNFeBoleto.responsavelFinanceiro = {
 				nomeCompleto: '',
 				email: '',
 				senha: '',
 				telefone: '',
-			}
+			};
 			document.getElementById('nomeFinanceiro').value = '';
 			document.getElementById('emailFinanceiro').value = '';
 			document.getElementById('senhaFinanceiro').value = '';
 			document.getElementById('confirmaSenhaFinanceiro').value = '';
 			document.getElementById('telefoneFinanceiro').value = '';
-		}	
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [disabledInput])
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [disabledFinanceiroInput]);
 
 	useEffect(() => {
-		if (disabledInput === true) {
-			formData.dadosNFeBoleto.responsavelFinanceiro = formData.dadosAdministrador.administrador;
-		}	
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [formData.dadosAdministrador.administrador])
+		if (disabledFinanceiroInput === true) {
+			formData.dadosNFeBoleto.responsavelFinanceiro =
+				formData.dadosAdministrador.administrador;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formData.dadosAdministrador.administrador]);
 
-    const handleCheckPassword1 = (e) => {
+	const handleCheckPassword1 = (e) => {
 		const { value } = e.target;
 
 		console.log(value);
@@ -47,7 +53,7 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 		} else {
 			console.log('invalido');
 		}
-	}
+	};
 
 	const handleCheckPassword2 = (e) => {
 		const { value } = e.target;
@@ -58,18 +64,18 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 		} else {
 			console.log('invalido');
 		}
-	}
+	};
 
-    return (
-        <Form>
-            <h1>
-                <div>
-                    <img src="icons/help-blue.png" alt="" />
-                </div>
-                <span>Dados do responsável financeiro.</span>
+	return (
+		<Form onSubmit={() => navigation.next()}>
+			<h1>
+				<div>
+					<img src='icons/help-blue.png' alt='' />
+				</div>
+				<span>Dados do responsável financeiro.</span>
 			</h1>
-            <div>
-            <span className='label vertical'>
+			<div>
+				<span className='label vertical'>
 					<p>Dia preferencial para vencimento</p>
 				</span>
 				<span className='radioButtons'>
@@ -78,10 +84,7 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 							type='radio'
 							name='dadosNFeBoleto.diaVencimento'
 							defaultValue='10'
-							defaultChecked={
-								formData.dadosNFeBoleto.diaVencimento ===
-								'10'
-							}
+							defaultChecked={formData.dadosNFeBoleto.diaVencimento === '10'}
 							onChange={setForm}
 						/>
 						<label htmlFor='10'>10</label>
@@ -91,10 +94,7 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 							type='radio'
 							name='dadosNFeBoleto.diaVencimento'
 							defaultValue='15'
-							checked={
-								formData.dadosNFeBoleto.diaVencimento ===
-								'15'
-							}
+							checked={formData.dadosNFeBoleto.diaVencimento === '15'}
 							onChange={setForm}
 						/>
 						<label htmlFor='15'>15</label>
@@ -104,54 +104,47 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 							type='radio'
 							name='dadosNFeBoleto.diaVencimento'
 							defaultValue='20'
-							checked={
-								formData.dadosNFeBoleto.diaVencimento ===
-								'20'
-							}
+							checked={formData.dadosNFeBoleto.diaVencimento === '20'}
 							onChange={setForm}
 						/>
 						<label htmlFor='20'>20</label>
 					</span>
-                    <span className='input'>
+					<span className='input'>
 						<input
 							type='radio'
 							name='dadosNFeBoleto.diaVencimento'
 							defaultValue='25'
-							checked={
-								formData.dadosNFeBoleto.diaVencimento ===
-								'25'
-							}
+							checked={formData.dadosNFeBoleto.diaVencimento === '25'}
 							onChange={setForm}
 						/>
 						<label htmlFor='25'>25</label>
 					</span>
-                    <span className='input'>
+					<span className='input'>
 						<input
 							type='radio'
 							name='dadosNFeBoleto.diaVencimento'
 							defaultValue='30'
-							checked={
-								formData.dadosNFeBoleto.diaVencimento ===
-								'30'
-							}
+							checked={formData.dadosNFeBoleto.diaVencimento === '30'}
 							onChange={setForm}
 						/>
 						<label htmlFor='30'>30</label>
 					</span>
 				</span>
 			</div>
-            <div>
-				<span className='label'>
-				</span>
+			<div>
+				<span className='label'></span>
 				<span className='input adminData'>
-						<input
-							type='checkbox'
-							onChange={handleAdminData}
-						/>
-						<label>Desejo usar os dados do administrador para preencher estes campos.</label>
-					</span>
+					<input
+						type='checkbox'
+						onChange={handleAdminData}
+						checked={disabledFinanceiroInput}
+					/>
+					<label>
+						Desejo usar os dados do administrador para preencher estes campos.
+					</label>
+				</span>
 			</div>
-            <div>
+			<div>
 				<span className='label'>
 					<p>Nome completo *</p>
 				</span>
@@ -163,11 +156,11 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 						name='dadosNFeBoleto.responsavelFinanceiro.nomeCompleto'
 						value={formData.dadosNFeBoleto.responsavelFinanceiro.nomeCompleto}
 						onChange={setForm}
-						disabled={disabledInput}
+						disabled={disabledFinanceiroInput}
 					/>
 				</span>
 			</div>
-            <div>
+			<div>
 				<span className='label'>
 					<p>Email *</p>
 				</span>
@@ -175,15 +168,15 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 					<input
 						className='size3'
 						id='emailFinanceiro'
-						type='text'
+						type='email'
 						name='dadosNFeBoleto.responsavelFinanceiro.email'
 						value={formData.dadosNFeBoleto.responsavelFinanceiro.email}
 						onChange={setForm}
-						disabled={disabledInput}
+						disabled={disabledFinanceiroInput}
 					/>
 				</span>
 			</div>
-            <div>
+			<div>
 				<span className='label'>
 					<p>Senha *</p>
 				</span>
@@ -195,12 +188,12 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 						name='dadosNFeBoleto.responsavelFinanceiro.senha'
 						value={formData.dadosNFeBoleto.responsavelFinanceiro.senha}
 						onChange={setForm}
-						disabled={disabledInput}
+						disabled={disabledFinanceiroInput}
 						onBlur={handleCheckPassword1}
 					/>
 				</span>
 			</div>
-            <div>
+			<div>
 				<span className='label'>
 					<p>Confirme a senha *</p>
 				</span>
@@ -213,11 +206,11 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 						// name='dadosAdministrador.email'
 						// value={formData.dadosAdministrador.email}
 						// onChange={setForm}
-						disabled={disabledInput}
+						disabled={disabledFinanceiroInput}
 					/>
 				</span>
 			</div>
-            <div>
+			<div>
 				<span className='label'>
 					<p>Celular *</p>
 				</span>
@@ -230,15 +223,15 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 						name='dadosNFeBoleto.responsavelFinanceiro.telefone'
 						value={formData.dadosNFeBoleto.responsavelFinanceiro.telefone}
 						onChange={setForm}
-                        placeholder='(00) 0000-0000'
-						disabled={disabledInput}
+						placeholder='(00) 0000-0000'
+						disabled={disabledFinanceiroInput}
 					/>
 				</span>
 			</div>
-            <div className='buttons'>
+			<div className='buttons'>
 				<button onClick={() => navigation.previous()}>Voltar</button>
-				<button onClick={() => navigation.next()}>Próxima</button>
+				<button type='submit'>Próxima</button>
 			</div>
-        </Form>
-    )
-}
+		</Form>
+	);
+};
