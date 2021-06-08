@@ -17,6 +17,8 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		setEstadoChecked,
 		formaChecked,
 		setFormaChecked,
+		errors,
+		setErrors,
 	} = useContext(GlobalContext);
 
 	const handleLinguagens = (e) => {
@@ -79,16 +81,19 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 
 	useEffect(() => {
 		if (document.getElementById('outrasLinguagensInput').value === '') {
-			document.getElementById('outrasLinguagensInput').value = formData.informacoesAdicionais.outrasLinguagens;
+			document.getElementById('outrasLinguagensInput').value =
+				formData.informacoesAdicionais.outrasLinguagens;
 		}
 		if (document.getElementById('outrasFormasInput').value === '') {
-			document.getElementById('outrasFormasInput').value = formData.informacoesAdicionais.outrasFormas;
+			document.getElementById('outrasFormasInput').value =
+				formData.informacoesAdicionais.outrasFormas;
 		}
 		if (document.getElementById('clientesInput').value === '') {
-			document.getElementById('clientesInput').value = formData.informacoesAdicionais.principaisClientes;
+			document.getElementById('clientesInput').value =
+				formData.informacoesAdicionais.principaisClientes;
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleRamoDeAtividade = (e) => {
 		const { value } = e.target;
@@ -238,8 +243,93 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 		formData.informacoesAdicionais.principaisClientes = splitClientes;
 	};
 
+	const validate = (e, chNumber) => {
+		let err = errors;
+		const { name } = e.target;
+		let path = name.split('.');
+
+		let path1 = '';
+		let path2 = '';
+
+		if (path.length <= 2) {
+			path1 = path[0];
+			path2 = path[1];
+
+			// eslint-disable-next-line default-case
+			switch (name) {
+				case 'informacoesAdicionais.linguagensDeProgramacao':
+					handleLinguagens(e);
+					break;
+				case 'informacoesAdicionais.ramoDeAtividade':
+					handleRamoDeAtividade(e);
+					break;
+				case 'informacoesAdicionais.estadosQuePossuiClientes':
+					handleEstados(e);
+					break;
+				case 'informacoesAdicionais.formaComercializacaoErp':
+					handleFormas(e);
+					break;
+			}
+
+			if (formData[path1][path2].length < chNumber) {
+				err[path1][path2] = true;
+				document.getElementById(`error.${path1}.${path2}`).hidden = false;
+			} else {
+				err[path1][path2] = false;
+				document.getElementById(`error.${path1}.${path2}`).hidden = true;
+			}
+		}
+		setErrors(err);
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		let err = errors;
+
+		if (formData.informacoesAdicionais.linguagensDeProgramacao.length < 1) {
+			err.informacoesAdicionais.linguagensDeProgramacao = true;
+			document.getElementById(`error.informacoesAdicionais.linguagensDeProgramacao`).hidden = false;
+		} else {
+			err.informacoesAdicionais.linguagensDeProgramacao = false;
+			document.getElementById(`error.informacoesAdicionais.linguagensDeProgramacao`).hidden = true;
+		}
+
+		if (formData.informacoesAdicionais.ramoDeAtividade.length < 1) {
+			err.informacoesAdicionais.ramoDeAtividade = true;
+			document.getElementById(`error.informacoesAdicionais.ramoDeAtividade`).hidden = false;
+		} else {
+			err.informacoesAdicionais.ramoDeAtividade = false;
+			document.getElementById(`error.informacoesAdicionais.ramoDeAtividade`).hidden = true;
+		}
+
+		if (formData.informacoesAdicionais.estadosQuePossuiClientes.length < 1) {
+			err.informacoesAdicionais.estadosQuePossuiClientes = true;
+			document.getElementById(`error.informacoesAdicionais.estadosQuePossuiClientes`).hidden = false;
+		} else {
+			err.informacoesAdicionais.estadosQuePossuiClientes = false;
+			document.getElementById(`error.informacoesAdicionais.estadosQuePossuiClientes`).hidden = true;
+		}
+
+		if (formData.informacoesAdicionais.formaComercializacaoErp.length < 1) {
+			err.informacoesAdicionais.formaComercializacaoErp = true;
+			document.getElementById(`error.informacoesAdicionais.formaComercializacaoErp`).hidden = false;
+		} else {
+			err.informacoesAdicionais.formaComercializacaoErp = false;
+			document.getElementById(`error.informacoesAdicionais.formaComercializacaoErp`).hidden = true;
+		}
+
+		setErrors(err);
+
+		let exists = Object.values(errors.informacoesAdicionais).includes(true);
+
+		if (exists === false) {
+			navigation.next();
+		}
+	};
+
 	return (
-		<Form onSubmit={() => navigation.next()}>
+		<Form onSubmit={handleSubmit}>
 			<h1>
 				Preencha os dados abaixo para entendermos mais sobre a sua organização.
 			</h1>
@@ -252,28 +342,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Delphi'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[0].isChecked}
 						/>
 						<label>Delphi</label>
 						<input
 							type='checkbox'
 							value='Visual Basic'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[1].isChecked}
 						/>
 						<label>Visual Basic</label>
 						<input
 							type='checkbox'
 							value='C#'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[2].isChecked}
 						/>
 						<label>C#</label>
 						<input
 							type='checkbox'
 							value='PHP'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[3].isChecked}
 						/>
 						<label>PHP</label>
@@ -282,20 +376,23 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Java'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[4].isChecked}
 						/>
 						<label>Java</label>
 						<input
 							type='checkbox'
 							value='Outras'
-							onChange={(e) => handleLinguagens(e)}
+							name='informacoesAdicionais.linguagensDeProgramacao'
+							onChange={validate}
 							checked={languageChecked[5].isChecked}
 						/>
 						<label>Outras</label>
 						<input
 							type='checkbox'
 							value='Nenhuma'
+							name='informacoesAdicionais.linguagensDeProgramacao'
 							onChange={(e) => handleLinguagens(e)}
 							checked={languageChecked[6].isChecked}
 						/>
@@ -314,6 +411,13 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 					</span>
 				</div>
 			</div>
+			<span
+				className='error'
+				id='error.informacoesAdicionais.linguagensDeProgramacao'
+				hidden={true}
+			>
+				Escolha pelo menos uma linguagem de programação!
+			</span>
 			<div>
 				<span className='label vertical2'>
 					<p>Ramo de atividade *</p>
@@ -323,28 +427,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Varejo'
-							onChange={(e) => handleRamoDeAtividade(e)}
+							name='informacoesAdicionais.ramoDeAtividade'
+							onChange={validate}
 							checked={ramoChecked[0].isChecked}
 						/>
 						<label>Varejo</label>
 						<input
 							type='checkbox'
 							value='Indústria'
-							onChange={(e) => handleRamoDeAtividade(e)}
+							name='informacoesAdicionais.ramoDeAtividade'
+							onChange={validate}
 							checked={ramoChecked[1].isChecked}
 						/>
 						<label>Indústria</label>
 						<input
 							type='checkbox'
 							value='Comércio'
-							onChange={(e) => handleRamoDeAtividade(e)}
+							name='informacoesAdicionais.ramoDeAtividade'
+							onChange={validate}
 							checked={ramoChecked[2].isChecked}
 						/>
 						<label>Comércio</label>
 						<input
 							type='checkbox'
 							value='Transporte'
-							onChange={(e) => handleRamoDeAtividade(e)}
+							name='informacoesAdicionais.ramoDeAtividade'
+							onChange={validate}
 							checked={ramoChecked[3].isChecked}
 						/>
 						<label>Transporte</label>
@@ -353,13 +461,21 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Serviço'
-							onChange={(e) => handleRamoDeAtividade(e)}
+							name='informacoesAdicionais.ramoDeAtividade'
+							onChange={validate}
 							checked={ramoChecked[4].isChecked}
 						/>
 						<label>Serviço</label>
 					</span>
 				</div>
 			</div>
+			<span
+				className='error'
+				id='error.informacoesAdicionais.ramoDeAtividade'
+				hidden={true}
+			>
+				Escolha pelo menos um ramo de atividade!
+			</span>
 			<div>
 				<span className='label vertical3'>
 					<p>Estados onde possui clientes *</p>
@@ -369,28 +485,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Todos'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[0].isChecked}
 						/>
 						<label>Todos</label>
 						<input
 							type='checkbox'
 							value='AC'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[1].isChecked}
 						/>
 						<label>AC</label>
 						<input
 							type='checkbox'
 							value='AL'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[2].isChecked}
 						/>
 						<label>AL</label>
 						<input
 							type='checkbox'
 							value='AM'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[3].isChecked}
 						/>
 						<label>AM</label>
@@ -399,28 +519,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='AP'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[4].isChecked}
 						/>
 						<label>AP</label>
 						<input
 							type='checkbox'
 							value='BA'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[5].isChecked}
 						/>
 						<label>BA</label>
 						<input
 							type='checkbox'
 							value='CE'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[6].isChecked}
 						/>
 						<label>CE</label>
 						<input
 							type='checkbox'
 							value='DF'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[7].isChecked}
 						/>
 						<label>DF</label>
@@ -429,28 +553,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='ES'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[8].isChecked}
 						/>
 						<label>ES</label>
 						<input
 							type='checkbox'
 							value='GO'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[9].isChecked}
 						/>
 						<label>GO</label>
 						<input
 							type='checkbox'
 							value='MA'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[10].isChecked}
 						/>
 						<label>MA</label>
 						<input
 							type='checkbox'
 							value='MG'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[11].isChecked}
 						/>
 						<label>MG</label>
@@ -459,28 +587,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='MS'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[12].isChecked}
 						/>
 						<label>MS</label>
 						<input
 							type='checkbox'
 							value='MT'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[13].isChecked}
 						/>
 						<label>MT</label>
 						<input
 							type='checkbox'
 							value='PA'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[14].isChecked}
 						/>
 						<label>PA</label>
 						<input
 							type='checkbox'
 							value='PB'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[15].isChecked}
 						/>
 						<label>PB</label>
@@ -489,28 +621,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='PE'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[16].isChecked}
 						/>
 						<label>PE</label>
 						<input
 							type='checkbox'
 							value='PI'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[17].isChecked}
 						/>
 						<label>PI</label>
 						<input
 							type='checkbox'
 							value='PR'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[18].isChecked}
 						/>
 						<label>PR</label>
 						<input
 							type='checkbox'
 							value='RJ'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[19].isChecked}
 						/>
 						<label>RJ</label>
@@ -519,28 +655,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='RN'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[20].isChecked}
 						/>
 						<label>RN</label>
 						<input
 							type='checkbox'
 							value='RO'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[21].isChecked}
 						/>
 						<label>RO</label>
 						<input
 							type='checkbox'
 							value='RR'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[22].isChecked}
 						/>
 						<label>RR</label>
 						<input
 							type='checkbox'
 							value='RS'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[23].isChecked}
 						/>
 						<label>RS</label>
@@ -549,34 +689,45 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='SC'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[24].isChecked}
 						/>
 						<label>SC</label>
 						<input
 							type='checkbox'
 							value='SE'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[25].isChecked}
 						/>
 						<label>SE</label>
 						<input
 							type='checkbox'
 							value='SP'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[26].isChecked}
 						/>
 						<label>SP</label>
 						<input
 							type='checkbox'
 							value='TO'
-							onChange={(e) => handleEstados(e)}
+							name='informacoesAdicionais.estadosQuePossuiClientes'
+							onChange={validate}
 							checked={estadoChecked[27].isChecked}
 						/>
 						<label>TO</label>
 					</span>
 				</div>
 			</div>
+			<span
+				className='error'
+				id='error.informacoesAdicionais.estadosQuePossuiClientes'
+				hidden={true}
+			>
+				Escolha pelo menos um estado!
+			</span>
 			<div>
 				<span className='label vertical4'>
 					<p>Formas comercialização ERP *</p>
@@ -586,28 +737,32 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Locação'
-							onChange={(e) => handleFormas(e)}
+							name='informacoesAdicionais.formaComercializacaoErp'
+							onChange={validate}
 							checked={formaChecked[0].isChecked}
 						/>
 						<label>Locação</label>
 						<input
 							type='checkbox'
 							value='Venda'
-							onChange={(e) => handleFormas(e)}
+							name='informacoesAdicionais.formaComercializacaoErp'
+							onChange={validate}
 							checked={formaChecked[1].isChecked}
 						/>
 						<label>Venda</label>
 						<input
 							type='checkbox'
 							value='Uso interno'
-							onChange={(e) => handleFormas(e)}
+							name='informacoesAdicionais.formaComercializacaoErp'
+							onChange={validate}
 							checked={formaChecked[2].isChecked}
 						/>
 						<label>Uso interno</label>
 						<input
 							type='checkbox'
 							value='Outro'
-							onChange={(e) => handleFormas(e)}
+							name='informacoesAdicionais.formaComercializacaoErp'
+							onChange={validate}
 							checked={formaChecked[3].isChecked}
 						/>
 						<label>Outro</label>
@@ -616,7 +771,8 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						<input
 							type='checkbox'
 							value='Nenhuma'
-							onChange={(e) => handleFormas(e)}
+							name='informacoesAdicionais.formaComercializacaoErp'
+							onChange={e => handleFormas(e)}
 							checked={formaChecked[4].isChecked}
 						/>
 						<label>Nenhuma</label>
@@ -633,6 +789,13 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 					</span>
 				</div>
 			</div>
+			<span
+				className='error'
+				id='error.informacoesAdicionais.formaComercializacaoErp'
+				hidden={true}
+			>
+				Escolha pelo menos uma forma!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Principais clientes</p>
@@ -657,6 +820,7 @@ export const Step2 = ({ formData, setForm, navigation }) => {
 						name='informacoesAdicionais.quantidadeDeClientes'
 						value={formData.informacoesAdicionais.quantidadeDeClientes}
 						onChange={setForm}
+						required
 					/>
 				</span>
 			</div>

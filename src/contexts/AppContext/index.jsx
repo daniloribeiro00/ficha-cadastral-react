@@ -80,7 +80,7 @@ export const AppContext = ({ children }) => {
 	const [formData, setForm] = useForm(defaultData);
 	const { step, navigation } = useStep({
 		steps,
-		initialStep: 0,
+		initialStep: 3,
 	});
 
 	const [companies, setCompanies] = useState(() => {
@@ -94,6 +94,60 @@ export const AppContext = ({ children }) => {
 	useEffect(() => {
 		localStorage.setItem('@companies', JSON.stringify(companies));
 	}, [companies]);
+
+	const [errors, setErrors] = useState({
+		dadosDaOrganizacao: {
+			razaoSocial: false,
+			nomeFantasia: false,
+			cnpj: false,
+			inscricaoEstadual: false,
+			telefone: false,
+			tipoEmpresa: false,
+			address: {
+				cep: false,
+				endereco: false,
+				numero: false,
+				bairro: false,
+			},
+		},
+		informacoesAdicionais: {
+			linguagensDeProgramacao: false,
+			ramoDeAtividade: false,
+			estadosQuePossuiClientes: false,
+			formaComercializacaoErp: false,
+			quantidadeDeClientes: false,
+		},
+		dadosRepresentanteLegal: {
+			nomeCompleto: false,
+			cpf: false,
+			email: false,
+			dataNascimento: false,
+			telefone: false,
+		},
+		dadosAdministrador: {
+			administrador: {
+				nomeCompleto: false,
+				email: false,
+				senha: false,
+				telefone: false,
+			},
+			tecnico: {
+				nomeCompleto: false,
+				email: false,
+				senha: false,
+				telefone: false,
+			},
+		},
+		dadosNFeBoleto: {
+			diaVencimento: false,
+			responsavelFinanceiro: {
+				nomeCompleto: false,
+				email: false,
+				senha: false,
+				telefone: false,
+			},
+		},
+	});
 
 	// Step 1
 	const [disabledSelectCidade, setDisabledSelectCidade] = useState(true);
@@ -109,7 +163,7 @@ export const AppContext = ({ children }) => {
 		neighborhood: '',
 	});
 
-	const loadUf =  () => {
+	const loadUf = () => {
 		fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
 			.then((response) => response.json())
 			.then((data) => {
@@ -311,8 +365,8 @@ export const AppContext = ({ children }) => {
 			isChecked: false,
 		},
 	]);
-    const [formaChecked, setFormaChecked] = useState([
-        {
+	const [formaChecked, setFormaChecked] = useState([
+		{
 			value: 'Locação',
 			isChecked: false,
 		},
@@ -332,7 +386,7 @@ export const AppContext = ({ children }) => {
 			value: 'Nenhuma',
 			isChecked: false,
 		},
-    ])
+	]);
 
 	// Step 4
 	const [disabledTecnicoInput, setDisabledTecnicoInput] = useState(false);
@@ -375,6 +429,8 @@ export const AppContext = ({ children }) => {
 				setDisabledTecnicoInput,
 				disabledFinanceiroInput,
 				setDisabledFinanceiroInput,
+				errors,
+				setErrors,
 			}}
 		>
 			{children}

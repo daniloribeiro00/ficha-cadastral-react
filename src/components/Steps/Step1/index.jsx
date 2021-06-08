@@ -16,9 +16,12 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		listCity,
 		cep,
 		setCep,
+		errors,
+		setErrors,
 	} = useContext(GlobalContext);
 
 	const handleChangeCep = (e) => {
+		validate(e, 9);
 		const { value } = e.target;
 
 		const typedCep = value?.replace(/[^0-9]/g, '');
@@ -43,7 +46,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [cep]);
 
-	const handleInscricaoEstadual = () => {
+	const handleInscricaoEstadual = (e) => {
 		if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
 			formData.dadosDaOrganizacao.inscricaoEstadual = '';
 			setDisabledInputInscricaoEstadual(false);
@@ -51,10 +54,83 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 			formData.dadosDaOrganizacao.inscricaoEstadual = 'Isento';
 			setDisabledInputInscricaoEstadual(true);
 		}
+		validate(e);
 	};
 
+	const validate = (e, chNumber) => {
+		let err = errors;
+		const { name } = e.target;
+		let path = name.split('.');
+
+		let path1 = '';
+		let path2 = '';
+		let path3 = '';
+
+		if (path.length <= 2) {
+			path1 = path[0];
+			path2 = path[1];
+			if (formData.dadosDaOrganizacao.inscricaoEstadual === 'Isento') {
+				err[path1][path2] = false;
+				document.getElementById(`error.${path1}.${path2}`).hidden = true;
+			} else if (formData[path1][path2].length < chNumber) {
+				err[path1][path2] = true;
+				document.getElementById(`error.${path1}.${path2}`).hidden = false;
+			} else {
+				err[path1][path2] = false;
+				document.getElementById(`error.${path1}.${path2}`).hidden = true;
+			}
+		} else {
+			path1 = path[0];
+			path2 = path[1];
+			path3 = path[2];
+			if (formData[path1][path2][path3].length < chNumber) {
+				err[path1][path2][path3] = true;
+				document.getElementById(
+					`error.${path1}.${path2}.${path3}`
+				).hidden = false;
+			} else {
+				err[path1][path2][path3] = false;
+				document.getElementById(
+					`error.${path1}.${path2}.${path3}`
+				).hidden = true;
+			}
+		}
+		setErrors(err);
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		let err = errors;
+
+		if (formData.dadosDaOrganizacao.tipoEmpresa === '') {
+			err.dadosDaOrganizacao.tipoEmpresa = true;
+			document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = false;
+		} else {
+			err.dadosDaOrganizacao.tipoEmpresa = false;
+			document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = true;
+		}
+
+		setErrors(err);
+
+		let exists = Object.values(errors.dadosDaOrganizacao).includes(true);
+
+		if (exists === false) {
+			navigation.next()
+		}
+	}
+
+	useEffect(() => {
+		let err = errors;
+
+		err.dadosDaOrganizacao.tipoEmpresa = false;
+		document.getElementById(`error.dadosDaOrganizacao.tipoEmpresa`).hidden = true;
+		
+		setErrors(err);
+	}, [formData.dadosDaOrganizacao.tipoEmpresa])
+
 	return (
-		<Form onSubmit={() => navigation.next()}>
+		<Form onSubmit={handleSubmit}>
 			<div>
 				<span className='label'>
 					<p>Pessoa</p>
@@ -82,10 +158,18 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.razaoSocial'
 						value={formData.dadosDaOrganizacao.razaoSocial}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 3)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.razaoSocial'
+				hidden={true}
+			>
+				Deve ter no mínimo 3 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Nome fantasia *</p>
@@ -97,10 +181,18 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.nomeFantasia'
 						value={formData.dadosDaOrganizacao.nomeFantasia}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 3)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.nomeFantasia'
+				hidden={true}
+			>
+				Deve ter no mínimo 3 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>CNPJ *</p>
@@ -108,15 +200,20 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<InputMask
 						mask='99.999.999/9999-99'
+						maskChar=''
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.cnpj'
 						value={formData.dadosDaOrganizacao.cnpj}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 18)}
 						required
 					/>
 				</span>
 			</div>
+			<span className='error' id='error.dadosDaOrganizacao.cnpj' hidden={true}>
+				Deve ser um CNPJ (14 números)!
+			</span>
 			<div>
 				<span className='label vertical'>
 					<p>Inscrição Estadual *</p>
@@ -129,6 +226,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							name='dadosDaOrganizacao.inscricaoEstadual'
 							disabled={disabledInputInscricaoEstadual}
 							value={formData.dadosDaOrganizacao.inscricaoEstadual}
+							onBlur={(e) => validate(e, 3)}
 							onChange={setForm}
 							required
 						/>
@@ -144,6 +242,13 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					</span>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.inscricaoEstadual'
+				hidden={true}
+			>
+				Deve ter no mínimo 3 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Telefone *</p>
@@ -151,15 +256,24 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<InputMask
 						mask='(99) 99999-9999'
+						maskChar=''
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.telefone'
 						value={formData.dadosDaOrganizacao.telefone}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 14)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.telefone'
+				hidden={true}
+			>
+				Deve ter no mínimo 10 caracteres!
+			</span>
 			<div>
 				<span className='label vertical2'>
 					<p>Tipo empresa</p>
@@ -189,9 +303,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 							}
 							onChange={setForm}
 						/>
-						<label htmlFor='Integrador / representante de software'>
-							Integrador / representante de software
-						</label>
+						<label htmlFor='Integrador / representante de software'>Integrador / representante de software</label>
 					</span>
 					<span className='input'>
 						<input
@@ -208,6 +320,13 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					</span>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.tipoEmpresa'
+				hidden={true}
+			>
+				Selecione o tipo da empresa!
+			</span>
 			<div>
 				<span className='label'>
 					<p>CEP *</p>
@@ -215,6 +334,7 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 				<span className='input'>
 					<InputMask
 						mask='99999-999'
+						maskChar=''
 						className='size2'
 						type='text'
 						name='dadosDaOrganizacao.address.cep'
@@ -225,6 +345,13 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.address.cep'
+				hidden={true}
+			>
+				Deve ter no mínimo 8 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Endereço *</p>
@@ -236,10 +363,18 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.endereco'
 						value={formData.dadosDaOrganizacao.address.endereco}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 3)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.address.endereco'
+				hidden={true}
+			>
+				Deve ter no mínimo 3 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Número *</p>
@@ -251,10 +386,18 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.numero'
 						value={formData.dadosDaOrganizacao.address.numero}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 1)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.address.numero'
+				hidden={true}
+			>
+				Deve ter no mínimo 1 carácter!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Complemento</p>
@@ -280,10 +423,18 @@ export const Step1 = ({ formData, setForm, navigation }) => {
 						name='dadosDaOrganizacao.address.bairro'
 						value={formData.dadosDaOrganizacao.address.bairro}
 						onChange={setForm}
+						onBlur={(e) => validate(e, 3)}
 						required
 					/>
 				</span>
 			</div>
+			<span
+				className='error'
+				id='error.dadosDaOrganizacao.address.bairro'
+				hidden={true}
+			>
+				Deve ter no mínimo 3 caracteres!
+			</span>
 			<div>
 				<span className='label'>
 					<p>Estado *</p>

@@ -66,6 +66,16 @@ export const Form = styled.form`
 		}
 	}
 
+	.error {
+		font-family: 'Open Sans', sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		color: #a94442;
+		margin-left: 350px;
+		position: relative;
+		top: -15px;
+	}
+
 	.buttons {
 		max-width: 800px;
 		margin: 0 auto 3rem auto;
