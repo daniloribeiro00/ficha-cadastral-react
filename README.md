@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Ficha Cadastral Tecnospeed
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projeto desenvolvido por Danilo Ribeiro para teste de conhecimento técnico realizado pela empresa Tecnospeed.
 
-## Available Scripts
+Consiste de um formulário de múltiplas etapas desenvolvido utilizando [Create React App](https://github.com/facebook/create-react-app) para a realização de um cadastro de uma empresa.
 
-In the project directory, you can run:
+Nele, diversos campos são marcados como obrigatórios e são exibidas mensagens caso o usuário não os preencha.
 
-### `yarn start`
+Os dados inseridos são verificados quanto à sua quantidade de caracteres e sua validade (no caso de CEP, CPF e CNPJ).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+As senhas também são verificadas por meio de sua complexidade. É necessário preencher igualmente os campos "Senha" e "Confirme a senha", o que não era obrigatório no formulário original da Tecnospeed pois, mesmo inserindo senhas diferentes, o sistema permitia avançar.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Ao fim do preenchimento, é exibida uma tela de confirmação, onde os dados digitados podem ser conferidos antes de serem enviados.
 
-### `yarn test`
+Após isso, basta clicar no botão "Enviar" para finalizar.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Com isso, os dados são armazenados no local storage do navegador e podem ser conferidos abrindo sua aba "Console".
 
-### `yarn build`
+O projeto foi hospedado na Vercel e pode ser conferido clicando [aqui](https://ficha-cadastral-react.vercel.app/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+</br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Execução
+</br>
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Para executar esse projeto, basta cloná-lo para sua máquina e rodar um dos scripts abaixo para instalar todas as dependências do projeto:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `yarn` ou `npm install`
+</br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Após isso, basta executar um dos seguintes script para abri-lo em seu computador:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `yarn start` ou `npm start`
+</br>
 
-## Learn More
+Observação 1: é necessário ter o [Node.js](https://nodejs.org/en/) instalado em sua máquina.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Observação 2: para utilizar scripts iniciados em "yarn" é necessário instalar o gerenciador de pacotes [Yarn](https://yarnpkg.com/).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+</br>
 
-### Code Splitting
+#
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Bibliotecas e Dependências
+</br>
 
-### Analyzing the Bundle Size
+Esse projeto conta com diversas bibliotecas e dependências que auxiliam no seu funcionamento.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Algumas delas podem ser conferidas à seguir:
 
-### Making a Progressive Web App
+[styled-components](https://styled-components.com/): Biblioteca que utiliza o conceito de CSS-in-JS, permitindo escrever códigos CSS dentro do Javascript
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[cep-promise](https://github.com/BrasilAPI/cep-promise): Busca por CEP integrado diretamente aos serviços dos Correios, ViaCEP e WideNet.
 
-### Advanced Configuration
+[cpf-cnpj-validator](https://www.npmjs.com/package/cpf-cnpj-validator): Valida e formata strings de CPF ou CNPJ.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[date-fns](https://date-fns.org/): Biblioteca JavaScript para gerenciamento de datas.
 
-### Deployment
+[react-hooks-helper](https://www.npmjs.com/package/react-hooks-helper): Biblioteca de React Hooks personalizados.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[react-input-mask](https://www.npmjs.com/package/react-input-mask): Componente React para máscara de inputs.
 
-### `yarn build` fails to minify
+[zxcvbn](https://github.com/dropbox/zxcvbn): Medidor de complexidade de senhas.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Para o preenchimento dos campos de estados e cidades no formulário, foi utilizada a [API do IBGE](https://servicodados.ibge.gov.br/api/docs).
+
+</br>
+
+#
+
+## React Hooks
+</br>
+
+Para o desenvolvimento deste projeto, foram utilizados alguns React Hooks, necessários para executar algumas funções da aplicação.
+
+Eles podem ser conferidos à seguir:
+
+[useState](https://pt-br.reactjs.org/docs/hooks-state.html): Utilizado para criação de variáveis state.
+
+[useEffect](https://pt-br.reactjs.org/docs/hooks-effect.html): Permite executar efeitos colaterais em componentes funcionais.
+
+[createContext / useContext](https://pt-br.reactjs.org/docs/context.html): Disponibiliza uma forma de passar dados entre a árvore de componentes sem precisar passar props manualmente em cada nível.
+
+</br>
+
+#
+
+## Licença
+</br>
+
+[MIT License](https://opensource.org/licenses/MIT)
+
+
