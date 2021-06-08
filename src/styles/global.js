@@ -8,7 +8,7 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
 	body {
 		width: 1200px; 
         zoom: 50%;
