@@ -214,5 +214,9 @@ export const Form = styled.form`
 		.error {
 			margin: 0 auto;
 		}
+
+        #emailInput {
+            width: 280px;
+        }
 	}
 `;

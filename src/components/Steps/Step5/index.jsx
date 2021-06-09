@@ -148,9 +148,6 @@ export const Step5 = ({ formData, setForm, navigation }) => {
 	return (
 		<Form onSubmit={handleSubmit}>
 			<h1>
-				<div>
-					<img src='icons/help-blue.png' alt='' />
-				</div>
 				<span>Dados do responsável financeiro.</span>
 			</h1>
 			<div>

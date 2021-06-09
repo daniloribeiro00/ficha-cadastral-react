@@ -92,8 +92,7 @@ export const Container = styled.div`
 				height: 120px;
 				display: flex;
 				flex-direction: column;
-				justify-content: flex-start;
-				padding-top: 2rem;
+				justify-content: center;
 				font-weight: 520;
 
 				span {

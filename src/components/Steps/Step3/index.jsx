@@ -133,6 +133,7 @@ export const Step3 = ({ formData, setForm, navigation }) => {
 				</span>
 				<span className='input'>
 					<input
+						id='emailInput'
 						type='email'
 						name='dadosRepresentanteLegal.email'
 						value={formData.dadosRepresentanteLegal.email}
