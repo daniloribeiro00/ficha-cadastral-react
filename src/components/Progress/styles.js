@@ -75,4 +75,27 @@ export const Container = styled.div`
 			border-bottom: 5px solid #3873b4;
 		}
 	}
+
+	@media (max-width: 800px) {
+		margin-top: -1.3rem;
+
+		.progress {
+            margin: 0 2rem
+        }
+
+		.steps {
+			margin: 0 1rem;
+
+			div {
+				zoom: 55%;
+				width: 100%;
+				height: 180px;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				padding-top: 2rem;
+				font-weight: 520;
+			}
+		}
+    }
 `;

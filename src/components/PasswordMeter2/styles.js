@@ -45,4 +45,19 @@ export const Container = styled.div`
 			background-color: #009933;
 		}
 	}
+
+	@media (max-width: 900px) {
+		.password {
+			margin-top: -20px;
+			display: flex;
+			flex-direction: row;
+			height: 10px;
+			width: 120px;
+			margin: 0;
+
+			div {
+				margin-top: 0.5rem;
+			}
+		}
+	}
 `;

@@ -8,13 +8,6 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    @media (max-width: 800px) {
-	body {
-		width: 1200px; 
-        zoom: 50%;
-	}
-}
-
     body {
         font: 16px Roboto, sans-serif;
         min-height: 100%;

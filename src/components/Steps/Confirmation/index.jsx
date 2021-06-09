@@ -354,7 +354,7 @@ export const Confirmation = ({ formData, navigation }) => {
 					</div>
 				</div>
 			</div>
-			<div>
+			<div className='data'>
 				<div className='info'>
 					<h2>Dados do administrador.</h2>
 					<div>

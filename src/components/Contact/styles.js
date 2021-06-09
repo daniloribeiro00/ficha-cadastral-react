@@ -73,4 +73,33 @@ export const Content = styled.div`
             cursor: text;
         }
     }
+
+    @media (max-width: 850px) {
+        display: flex;
+        flex-direction: column;
+
+        .social {
+            a {
+                img {
+                    margin-right: 2rem;
+                }
+            }
+            
+            a:last-child {
+                img {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1rem;
+
+            button {
+                margin: 0.5rem 0;
+            }
+        }
+	}
 `;

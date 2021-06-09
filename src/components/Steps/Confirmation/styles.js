@@ -126,4 +126,51 @@ export const Form = styled.form`
             background-color: #3873b4;
         }
     }
+
+    @media (max-width: 900px) {
+		margin: 1rem;
+		text-align: center;
+
+		h1 {
+			margin-top: 0.3rem;
+		}
+
+		.data {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .info {
+                width: 350px;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    
+                    p {
+                        text-align: center;
+                        margin-right: 0;
+                    }
+
+                    .value {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            button {
+                margin-bottom: 2rem;
+            }
+        }
+	}
 `;

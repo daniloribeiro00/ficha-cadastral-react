@@ -13,6 +13,18 @@ export const Container = styled.div`
         border-bottom: 1px solid #eee;
         padding-bottom: 1rem;
     }
+
+    @media (max-width: 1200px) and (min-width: 800px) {
+		padding-right: 2rem;
+		padding-left: 2rem;
+	}
+
+    @media (max-width: 800px) {
+		h1 {
+            margin-top: -2.5rem;
+            text-align: center;
+        }
+    }
 `;
 
 export const Content = styled.div`

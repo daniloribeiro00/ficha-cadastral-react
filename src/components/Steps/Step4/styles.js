@@ -185,4 +185,75 @@ export const Form = styled.form`
     .size4 {
         width: 100px;
     }
+
+    @media (max-width: 900px) {
+		margin: 1rem;
+		text-align: center;
+
+		h1 {
+			margin-top: 0.3rem;
+		}
+
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 1.5rem 0 2rem 0;
+
+			.label {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				p {
+					margin: 0;
+					margin-bottom: 1rem;
+				}
+			}
+
+			.vertical {
+				margin-bottom: 0;
+			}
+
+			.vertical2 {
+				margin-bottom: 0;
+			}
+
+			.vertical3 {
+				margin-bottom: 0;
+			}
+
+            .vertical4 {
+				margin-bottom: 0;
+			}
+
+			.input {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 90%;
+				margin: 0 1rem;
+			}
+		}
+
+        .buttons {
+            button {
+                margin-bottom: 2rem;
+            }
+        }
+
+		.error {
+			margin: 0 auto;
+		}
+
+        .passwordMeter {
+            margin: 0 0 2rem 0;
+        }
+
+        .passwordSpan {
+            div {
+                margin-bottom: 0.8rem;
+            }
+        }
+	}
 `;

@@ -182,9 +182,6 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 	return (
 		<Form onSubmit={handleSubmit}>
 			<h1>
-				<div>
-					<img src='icons/help-blue.png' alt='' />
-				</div>
 				<span>Administrador da área restrita.</span>
 			</h1>
 			<div>
@@ -240,7 +237,7 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 						required
 					/>
 				</span>
-				<span>
+				<span className='passwordSpan'>
 					<PasswordMeter1
 						password={formData.dadosAdministrador.administrador.senha}
 					/>
@@ -304,9 +301,6 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 				Deve ter no mínimo 10 caracteres!
 			</span>
 			<h1 className='title2'>
-				<div>
-					<img src='icons/help-blue.png' alt='' />
-				</div>
 				<span>Técnico responsável pelo uso das soluções na organização.</span>
 			</h1>
 			<div>
@@ -382,7 +376,7 @@ export const Step4 = ({ formData, setForm, navigation }) => {
 					/>
 				</span>
 				<div className='passwordMeter'>
-					<span hidden={disabledTecnicoInput}>
+					<span hidden={disabledTecnicoInput} className='passwordSpan'>
 						<PasswordMeter2
 							password={formData.dadosAdministrador.tecnico.senha}
 						/>

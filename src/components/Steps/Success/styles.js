@@ -34,6 +34,24 @@ export const FinalMessage = styled.div`
 			margin-top: -10px;
 		}
 	}
+
+	@media (max-width: 900px) {
+		margin: 1rem;
+		text-align: center;
+		width: 90%;
+		margin: 0 auto;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 1rem 0;
+		}
+
+		h1 {
+			margin-top: 0.3rem;
+		}
+	}
 `;
 
 export const Buttons = styled.div`
@@ -60,5 +78,18 @@ export const Buttons = styled.div`
 	.showCompany {
 		border: 1px solid blue;
 		background-color: #3873b4;
+	}
+
+	@media (max-width: 900px) {
+		text-align: center;
+		width: 90%;
+		margin: 3rem auto;
+
+		div {	
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 1.5rem 0;
+		}
 	}
 `;

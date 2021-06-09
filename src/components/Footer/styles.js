@@ -9,4 +9,12 @@ export const Foot = styled.footer`
     border-top: 1px solid #eee;
     text-align: center;
     padding: 1.3rem 0 1rem 0;
+
+    @media (max-width: 900px) {
+		margin: 1rem;
+		text-align: center;
+		width: 100%;
+		margin: 0 auto;
+        position: relative;
+	}
 `;
