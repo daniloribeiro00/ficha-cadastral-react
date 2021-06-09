@@ -89,12 +89,16 @@ export const Container = styled.div`
 			div {
 				zoom: 55%;
 				width: 100%;
-				height: 180px;
+				height: 120px;
 				display: flex;
 				flex-direction: column;
 				justify-content: flex-start;
 				padding-top: 2rem;
 				font-weight: 520;
+
+				span {
+					display: none;
+				}
 			}
 		}
     }
