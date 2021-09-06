@@ -1,6 +1,6 @@
-# Ficha Cadastral Tecnospeed
+# Ficha Cadastral
 
-Projeto desenvolvido por Danilo Ribeiro para teste de conhecimento técnico realizado pela empresa Tecnospeed.
+Projeto desenvolvido para teste de conhecimento técnico realizado durante processo seletivo pela empresa [Tecnospeed](https://tecnospeed.com.br), e um clone do formulário existente até então de propriedade da mesma, a qual também é detentora de todos os direitos do nome "Tecnospeed" bem como sua respectiva logomarca, telefones e email de contato.
 
 Consiste de um formulário de múltiplas etapas desenvolvido utilizando [Create React App](https://github.com/facebook/create-react-app) para a realização de um cadastro de uma empresa.
 
@@ -8,7 +8,7 @@ Nele, diversos campos são marcados como obrigatórios e são exibidas mensagens
 
 Os dados inseridos são verificados quanto à sua quantidade de caracteres e sua validade (no caso de CEP, CPF e CNPJ).
 
-As senhas também são verificadas por meio de sua complexidade. É necessário preencher igualmente os campos "Senha" e "Confirme a senha", o que não era obrigatório no formulário original da Tecnospeed pois, mesmo inserindo senhas diferentes, o sistema permitia avançar.
+As senhas também são verificadas por meio de sua complexidade. É necessário preencher igualmente os campos "Senha" e "Confirme a senha".
 
 Ao fim do preenchimento, é exibida uma tela de confirmação, onde os dados digitados podem ser conferidos antes de serem enviados.
 
@@ -28,13 +28,24 @@ O projeto foi hospedado na Vercel e pode ser conferido clicando [aqui](https://f
 
 Para executar esse projeto, basta cloná-lo para sua máquina e rodar um dos scripts abaixo para instalar todas as dependências do projeto:
 
-### `yarn` ou `npm install`
-</br>
+```
+yarn
+
+# ou
+
+npm install
+```
+
 
 Após isso, basta executar um dos seguintes script para abri-lo em seu computador:
 
-### `yarn start` ou `npm start`
-</br>
+```
+yarn start
+
+# ou
+
+npm run start
+```
 
 Observação 1: é necessário ter o [Node.js](https://nodejs.org/en/) instalado em sua máquina.
 
@@ -66,23 +77,6 @@ Algumas delas podem ser conferidas à seguir:
 [zxcvbn](https://github.com/dropbox/zxcvbn): Medidor de complexidade de senhas.
 
 Para o preenchimento dos campos de estados e cidades no formulário, foi utilizada a [API do IBGE](https://servicodados.ibge.gov.br/api/docs).
-
-</br>
-
-#
-
-## React Hooks
-</br>
-
-Para o desenvolvimento deste projeto, foram utilizados alguns React Hooks, necessários para executar algumas funções da aplicação.
-
-Eles podem ser conferidos à seguir:
-
-[useState](https://pt-br.reactjs.org/docs/hooks-state.html): Utilizado para criação de variáveis state.
-
-[useEffect](https://pt-br.reactjs.org/docs/hooks-effect.html): Permite executar efeitos colaterais em componentes funcionais.
-
-[createContext / useContext](https://pt-br.reactjs.org/docs/context.html): Disponibiliza uma forma de passar dados entre a árvore de componentes sem precisar passar props manualmente em cada nível.
 
 </br>
 
